@@ -1,24 +1,23 @@
-const mysql = require('mysql2');
+const pg = require('pg');
 require('dotenv').config();
 
+const connectionString = `postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}?sslmode=disable` ;
 
-
-
-
-const client = mysql.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  port: process.env.DB_PORT
-})
-//Connecting To Database
-client.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected to MySQL");
+const client = new pg.Client({
+    connectionString: connectionString || process.env.DATABASE_URL,
 });
 
-
+console.log( `Connected to ${process.env.DB_NAME} on ${process.env.DB_HOST}` );
+client.connect();
 
 module.exports = client;
+
+
+
+
+
+
+
+
+
 
