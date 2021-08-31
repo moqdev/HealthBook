@@ -69,3 +69,66 @@ const SidebarButtons = () => {
       </Grommet>
   );
 };
+export class DocHome extends Component {
+  componentDidMount() {
+  }
+
+  render() {
+      const Header = () => (
+          <Box
+              tag='header'
+              background='brand'
+              pad='small'
+              elevation='small'
+              justify='between'
+              direction='row'
+              align='center'
+              flex={false}
+              style={{borderBottom:"1px solid grey"}}
+          >
+              <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
+
+          </Box>
+      );
+
+      return (
+          <Grommet full={true}
+              theme={theme}>
+              <Box align="left">
+                  <Header/>
+                  <Grid
+                      fill
+                      rows={['auto', 'flex']}
+                      columns={['auto', 'flex']}
+                      areas={[
+                          { name: 'sidebar', start: [0, 1], end: [0, 1] },
+                          { name: 'main', start: [1, 1], end: [1, 1] },
+                      ]}>
+                      <Box
+                      gridArea="sidebar"
+                      width="small"
+                      animation={[
+                      { type: 'fadeIn', duration: 300 },
+                      { type: 'slideRight', size: 'xlarge', duration: 150 },
+                      ]}
+                      >
+                          <SidebarButtons />
+                      </Box>
+                      <Box
+                          gridArea="main"
+                          justify="top"
+                          align="center">
+                          <Box align="center" pad="large">
+                              <Heading
+                                  color="#000000">Welcome Doctor
+                              </Heading>
+                          </Box>
+                      </Box>
+                  </Grid>
+              </Box>
+          </Grommet>
+      );
+  }
+}
+
+export default DocHome;
