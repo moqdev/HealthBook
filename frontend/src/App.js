@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import './App.css';
-import React from "react";
-function App() {
 import LogIn from './logIn.js';
+import Home from './Home';
 
 export default function App() {
   let [component, setComponent] = useState(<LogIn />)
@@ -28,7 +27,6 @@ export default function App() {
       }
     });
   }, [])
-}
   return (
     <Router>
       <div>
