@@ -46,6 +46,7 @@ export class DocSettings extends Component {
                     <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
                     </AppBar>
                     <Box pad="small">
+
                     <Form onSubmit={({ value }) => {
                         let email_in_use = "";
                         console.log(value);
