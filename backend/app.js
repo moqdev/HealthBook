@@ -20,6 +20,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter(dbHelpers));
 
+//Check if patient exists in database
+app.get('/checkIfPatientExists', (req, res) => {
+  let params = req.query;
+  let email = params.email;
+  let statement = `SELECT * FROM Patient WHERE email = "${email}"`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 //Patient log-in to show if px is logged in
 app.get('/checklogin', (req, res) => {
@@ -48,7 +63,10 @@ app.get('/checklogin', (req, res) => {
   });
 });
   
-}
+//Returns Who is Logged in
+app.get('/userInSession', (req, res) => {
+  return res.json({ email: `${email_in_use}`, who:`${who}`});
+});
 
 
 
