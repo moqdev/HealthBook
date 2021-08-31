@@ -68,6 +68,13 @@ app.get('/userInSession', (req, res) => {
   return res.json({ email: `${email_in_use}`, who:`${who}`});
 });
 
+//Logs the person out
+app.get('/endSession', (req, res) => {
+  console.log("Ending session");
+  email_in_use = "";
+  password_in_use = "";
+});
+
 
 
 
