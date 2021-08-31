@@ -1,25 +1,49 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import './App.css';
 import React from "react";
 function App() {
+import LogIn from './logIn.js';
+
+export default function App() {
+  let [component, setComponent] = useState(<LogIn />)
+    useEffect(()=>{
+    fetch("http://localhost:3001/userInSession")
+      .then(res => res.json())
+      .then(res => {
+      let string_json = JSON.stringify(res);
+      let email_json = JSON.parse(string_json);
+      let email = email_json.email;
+      let who = email_json.who;
+      if(email === ""){
+        setComponent(<LogIn />)
+      }
+      else{
+        if(who==="pat"){
+          setComponent(<Home />)
+        }
+        else{
+          setComponent(<DocHome />)
+        }
+      }
+    });
+  }, [])
+}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+       <Switch>
+         <Route path="/Home">
+            <Home />
+          </Route>
+          <Route path="/DocHome">
+            <DocHome />
+          </Route>
+          <Route path="/">
+            {component}
+          </Route>
+          </Switch>
+          </div>
+          </Router>
   );
 }
-
-export default App;
