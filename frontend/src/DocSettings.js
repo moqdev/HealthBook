@@ -46,8 +46,8 @@ export class DocSettings extends Component {
                     <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
                     </AppBar>
                     <Box pad="small">
-                    <Form
-                    onSubmit={({ value }) => {
+
+                    <Form onSubmit={({ value }) => {
                         let email_in_use = "";
                         console.log(value);
                         fetch("http://localhost:3001/userInSession")
@@ -70,32 +70,33 @@ export class DocSettings extends Component {
                             }
                           });
                           });
-                          }}>
-                          <h3>Password Change</h3>
-                          <FormField
+
+                    }}>
+                        <h3>Password Change</h3>
+                        <FormField
                             type='password'
                             label="Old Password"
                             name="oldPassword"
                             required
-                            />
-                            <br />
-                            <FormField
+                        />
+                        <br />
+                        <FormField
                             label="New Password"
                             name="newPassword"
                             required
-                            />
-                            <br />
-                            <Button
+                        />
+                        <br />
+                        <Button
                             type="submit"
                             label="Change Password"
                             primary
-                            />
-                            </Form>
-                            </Box>
-                        </Box>
-                    </Grommet>
-                );
-            }
-
-        }                          
-                          export default DocSettings;
+                        />
+                    </Form>
+                    </Box>
+                </Box>
+            </Grommet>
+        );
+    }
+}
+                    
+export default DocSettings;
