@@ -20,4 +20,28 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter(dbHelpers));
 
+
+//Patient log-in to show if px is logged in
+app.get('/checklogin', (req, res) => {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port} `);
+});
+
+
+
 module.exports = app;
