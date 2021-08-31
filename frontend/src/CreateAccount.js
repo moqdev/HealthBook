@@ -70,6 +70,75 @@ export class CreateAccount extends Component {
                     }
                   });
               }}>
+              <FormField
+                label="First Name"
+                name="firstName"
+                placeholder="First name"
+                required
+                validate={{ regexp: /^[a-z]/i }} />
+              <FormField
+                label="Last Name"
+                name="lastName"
+                required
+                placeholder="Last Name"
+                validate={{ regexp: /^[a-z]/i }} />
+              <FormField
+                label="Gender"
+                name="gender"
+                placeholder="Female or Male"
+                required />
+              <FormField
+                label="Medical History - Conditions"
+                name="conditions"
+                placeholder="Conditions"
+               />
+              <FormField
+                label="Medical History - Surgeries"
+                name="surgeries"
+                placeholder="Surgeries"
+               />
+              <FormField
+                label="Medical History - Medications"
+                name="medications"
+                placeholder="Medications"
+               />
+              <FormField
+                label="Address"
+                name="address"
+                placeholder="Address"
+                required />
+              <FormField
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Email"
+                required />
+              <FormField
+                label="Password"
+                name="password"
+                placeholder="Password"
+                required
+                validate={{ regexp: /^(?=.{8,})(?=.*[0-9]{2})/, message: "@ least 8 characters containing 2 digits" }} />
+              <Box direction="row" align="center" >
+                <Button
+                  style={{ textAlign: 'center' }}
+                  label="Cancel"
+                  fill="horizontal"
+                  href="/" />
+                <Button
+                  label="Sign Up"
+                  fill="horizontal"
+                  type="submit"
+                  primary />
+              </Box>
+              <Box
+                align="center" pad="small">
+                <Text>Are you a doctor?</Text>
+                <Button
+                  primary
+                  label="I'm a doctor"
+                  href="/MakeDoc" />
+              </Box>
                </Form>
           </Box>
         </Box>
@@ -77,3 +146,4 @@ export class CreateAccount extends Component {
     );
   }
 } 
+export default CreateAccount;
