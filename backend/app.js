@@ -350,6 +350,38 @@ app.listen(port, () => {
   console.log(`Listening on port ${port} `);
 });
 
+//To delete appointment
+app.get('/deleteAppt', (req, res) => {
+  let a = req.query;
+  let uid = a.uid;
+  let statement = `SELECT status FROM Appointment WHERE id=${uid};`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      results = results[0].status
+      if(results == "NotDone"){
+        statement = `DELETE FROM Appointment WHERE id=${uid};`;
+        console.log(statement);
+        con.query(statement, function (error, results, fields) {
+          if (error) throw error;
+        });
+      }
+      else{
+        if(who=="pat"){
+          statement = `DELETE FROM PatientsAttendAppointments p WHERE p.appt = ${uid}`;
+          console.log(statement);
+          con.query(statement, function (error, results, fields) {
+            if (error) throw error;
+          });
+        }
+      }
+    };
+  });
+  return;
+});
+
+
 
 
 module.exports = app;
