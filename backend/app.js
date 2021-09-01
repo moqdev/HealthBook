@@ -599,9 +599,6 @@ app.get('/allDiagnoses', (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Listening on port ${port} `);
-});
 
 //To delete appointment
 app.get('/deleteAppt', (req, res) => {
