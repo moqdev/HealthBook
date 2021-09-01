@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const db = require('./db');
 const dbHelpers = require('./helpers/dbHelpers')(db);
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
 
 //Variables to keep state info about who is logged in
 var email_in_use = "";
