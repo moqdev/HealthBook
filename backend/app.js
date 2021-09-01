@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/checkIfPatientExists', (req, res) => {
   let params = req.query;
   let email = params.email;
-  let statement = `SELECT * FROM Patient WHERE email = "${email}"`;
+  let statement = `SELECT * FROM Patient WHERE email = '${email}';`
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
