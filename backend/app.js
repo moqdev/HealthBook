@@ -250,6 +250,63 @@ app.post('/resetPasswordDoctor', (req, res) => {
     };
   });
 });
+//Checks If a similar appointment exists to avoid a clash
+app.get('/checkIfApptExists', (req, res) => {
+  let cond1, cond2, cond3 = ""
+  let params = req.query;
+  let email = params.email;
+  let doc_email = params.docEmail;
+  let startTime = params.startTime;
+  let date = params.date;
+  let ndate = new Date(date).toLocaleDateString().substring(0, 10)
+  let psql_date = `STR_TO_DATE('${ndate}', '%d/%m/%Y')`;
+  //psql to turn string to psql time obj
+  let psql_start = `CONVERT('${startTime}', TIME)`;
+  let statement = `SELECT * FROM PatientsAttendAppointments, Appointment  
+  WHERE patient = "${email}" AND
+  appt = id AND
+  date = ${psql_date} AND
+  starttime = ${psql_start}`
+  console.log(statement)
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      cond1 = results;
+      statement=`SELECT * FROM Diagnose d INNER JOIN Appointment a 
+      ON d.appt=a.id WHERE doctor="${doc_email}" AND date=${psql_date} AND status="NotDone" 
+      AND ${psql_start} >= starttime AND ${psql_start} < endtime`
+      console.log(statement)
+      con.query(statement, function (error, results, fields) {
+        if (error) throw error;
+        else {
+          cond2 = results;
+          statement = `SELECT doctor, starttime, endtime, breaktime, day FROM DocsHaveSchedules 
+          INNER JOIN Schedule ON DocsHaveSchedules.sched=Schedule.id
+          WHERE doctor="${doc_email}" AND 
+          day=DAYNAME(${psql_date}) AND 
+          (DATE_ADD(${psql_start},INTERVAL +1 HOUR) <= breaktime OR ${psql_start} >= DATE_ADD(breaktime,INTERVAL +1 HOUR));`
+          //not in doctor schedule
+          console.log(statement)
+          con.query(statement, function (error, results, fields) {
+            if (error) throw error;
+            else {
+              if(results.length){
+                results = []
+              }
+              else{
+                results = [1]
+              }
+              return res.json({
+                data: cond1.concat(cond2,results)
+              })
+            };
+          });
+        };
+      });
+    };
+  });
+  //doctor has appointment at the same time - Your start time has to be greater than all prev end times
+});
 
 
 
