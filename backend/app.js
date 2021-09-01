@@ -13,6 +13,8 @@ var password_in_use = "";
 var who = "";
 
 var app = express();
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -27,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/checkIfPatientExists', (req, res) => {
   let params = req.query;
   let email = params.email;
-  let statement = `SELECT * FROM Patient WHERE email = "${email}"`;
+  let statement = `SELECT * FROM Patient WHERE email = '${email}';`
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
