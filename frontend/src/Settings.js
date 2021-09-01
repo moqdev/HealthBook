@@ -35,6 +35,51 @@ const AppBar = (props) => (
         {...props} />
 );
 
+export class Settings extends Component {
+    constuctor() {
+    }
+    render() {
+        return (
+            <Grommet theme={theme} full>
+                <Box >
+                    <AppBar>
+                    <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>HMS</Heading></a>
+                    </AppBar>
+                    <Box pad="small">
+                    <Form
+                    onSubmit={({ value }) => {
+                        let email_in_use = "";
+                        console.log(value);
+                        fetch("http://localhost:3001/userInSession")
+                          .then(res => res.json())
+                          .then(res => {
+                            var string_json = JSON.stringify(res);
+                            var email_json = JSON.parse(string_json);
+                            email_in_use = email_json.email;
+                            console.log(email_in_use);
+                            console.log("eg");
+                          fetch("http://localhost:3001/resetPasswordPatient?email=" + 
+                          email_in_use + "&oldPassword=" + value.oldPassword + "&newPassword=" + 
+                          value.newPassword, {method: 'POST'})
+                          .then(res => res.json())
+                          .then(res => {
+                            let didUpdate = res.data.affectedRows;
+                            if(didUpdate === 0) {
+                                window.alert("Entered your old password incorrectly");
+                            } else {
+                                window.alert("Password Reset Successful");
+                            }
+                          });
+                          });
+                    }}>
+
+                    </Form>
+                    </Box>
+                </Box>
+            </Grommet>
+        );
+    }
+}
 
 
 
