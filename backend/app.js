@@ -294,6 +294,24 @@ app.get('/showDiagnoses', (req, res) => {
   });
 });
 
+//To show appointments to doctor
+app.get('/doctorViewAppt', (req, res) => {
+  let a = req.query;
+  let email = a.email;
+  let statement = `SELECT a.id,a.date, a.starttime, a.status, p.name, psa.concerns, psa.symptoms
+  FROM Appointment a, PatientsAttendAppointments psa, Patient p
+  WHERE a.id = psa.appt AND psa.patient = p.email
+  AND a.id IN (SELECT appt FROM Diagnose WHERE doctor="${email_in_use}")`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 
 app.listen(port, () => {
