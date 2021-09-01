@@ -360,6 +360,29 @@ app.get('/OneHistory', (req, res) => {
     }
   })
 });
+//To show all patients whose medical history can be accessed
+app.get('/MedHistView', (req, res) => {
+  let params = req.query;
+  let patientName = "'%" + params.name + "%'";
+  let secondParamTest = "" + params.variable;
+  let statement = `SELECT name AS 'Name',
+                    PatientsFillHistory.history AS 'ID',
+                    email FROM Patient,PatientsFillHistory
+                    WHERE Patient.email = PatientsFillHistory.patient
+                    AND Patient.email IN (SELECT patient from PatientsAttendAppointments 
+                    NATURAL JOIN Diagnose WHERE doctor="${email_in_use}")`;
+  if (patientName != "''")
+    statement += " AND Patient.name LIKE " + patientName
+  console.log(statement)
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 
 
