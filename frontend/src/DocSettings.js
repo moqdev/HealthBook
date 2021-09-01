@@ -50,14 +50,14 @@ export class DocSettings extends Component {
                     <Form onSubmit={({ value }) => {
                         let email_in_use = "";
                         console.log(value);
-                        fetch("http://localhost:3001/userInSession")
+                        fetch("/userInSession")
                           .then(res => res.json())
                           .then(res => {
                             var string_json = JSON.stringify(res);
                             var email_json = JSON.parse(string_json);
                             email_in_use = email_json.email;
                             console.log(email_in_use);
-                          fetch("http://localhost:3001/resetPasswordDoctor?email=" + 
+                          fetch("/resetPasswordDoctor?email=" + 
                           email_in_use + "&oldPassword=" + value.oldPassword + "&newPassword=" + 
                           value.newPassword, {method: 'POST'})
                           .then(res => res.json())
