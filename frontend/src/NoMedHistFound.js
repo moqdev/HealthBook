@@ -19,12 +19,43 @@ const theme = {
     },
 };
 
+export class NoMedHistFound extends Component {
+    componentDidMount() {
+    }
+    render() {
+        const Header = () => (
+            <Box
+                tag='header'
+                background='brand'
+                pad='small'
+                elevation='small'
+                justify='between'
+                direction='row'
+                align='center'
+                flex={false}
+            >
+                <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
 
+            </Box>
+        );
 
-
-
-
-
+const Body = () => (
+            <div className="container">
+                <div className="panel panel-default p50 uth-panel" >
+                    <Heading alignSelf="center" textAlign="right" margin="large">Medical History Not Found<br /></Heading>
+                </div>
+            </div>
+        );
+        return (
+            <Grommet full={true} theme={theme}>
+                <Box fill={true}>
+                    <Header />
+                    <Body />
+                </Box>
+            </Grommet>
+        );
+    }
+}
 
 
 export default NoMedHistFound;
