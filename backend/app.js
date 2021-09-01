@@ -342,6 +342,24 @@ app.get('/docInfo', (req, res) => {
     };
   });
 });
+//To return a particular patient history
+app.get('/OneHistory', (req, res) => {
+  let params = req.query;
+  let email = params.patientEmail;
+  let statement = `SELECT gender,name,email,address,conditions,surgeries,medication
+                    FROM PatientsFillHistory,Patient,MedicalHistory
+                    WHERE PatientsFillHistory.history=id
+                    AND patient=email AND email = ` + email;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    }
+  })
+});
 
 
 
