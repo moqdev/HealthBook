@@ -145,7 +145,7 @@ app.get('/endSession', (req, res) => {
 app.get('/checkIfDocExists', (req, res) => {
   let params = req.query;
   let email = params.email;
-  let statement = `SELECT * FROM Doctor WHERE email = "${email}"`;
+  let statement = `SELECT * FROM Doctor WHERE email = '${email}';`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -165,13 +165,13 @@ app.get('/makeDocAccount', (req, res) => {
   let gender = params.gender;
   let schedule = params.schedule;
   let psql_statement = `INSERT INTO Doctor (email, gender, password, name) 
-                       VALUES ` + `("${email}", "${gender}", "${password}", "${name}")`;
+                       VALUES ` + `('${email}', '${gender}', '${password}', '${name}');`
   console.log(psql_statement);
   db.query(psql_statement, function (error, results, fields) {
     if (error) throw error;
     else {
       let psql_statement = `INSERT INTO DocsHaveSchedules (sched, doctor) 
-                       VALUES ` + `(${schedule}, "${email}")`;
+                       VALUES ` + `(${schedule}, '${email}');`;
       console.log(psql_statement);
       db.query(psql_statement, function(error){
         if (error) throw error;
