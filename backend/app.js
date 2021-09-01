@@ -62,7 +62,7 @@ if(medications===undefined){
     surgeries="none"
   }
   let psql_statement = `INSERT INTO Patient (email, password, name, address, gender) 
-                       VALUES ` + `("${email}", "${password}", "${name}", "${address}", "${gender}")`;
+                       VALUES ` + `('${email}', '${password}', '${name}', '${address}', '${gender}');`
   console.log(psql_statement);
   db.query(psql_statement, function (error, results, fields) {
     if (error) throw error;
@@ -82,13 +82,13 @@ if(medications===undefined){
     else {
       let generated_id = results[0].id + 1;
       let psql_statement = `INSERT INTO MedicalHistory (id, date, conditions, surgeries, medication) 
-      VALUES ` + `("${generated_id}", curdate(), "${conditions}", "${surgeries}", "${medications}")`;
+      VALUES ` + `('${generated_id}', ${curdate()}, '${conditions}', '${surgeries}', '${medications}');`
       console.log(psql_statement);
       db.query(psql_statement, function (error, results, fields) {
         if (error) throw error;
         else {
           let psql_statement = `INSERT INTO PatientsFillHistory (patient, history) 
-          VALUES ` + `("${email}",${generated_id})`;
+          VALUES ` + `('${email}',${generated_id});`
           console.log(psql_statement);
           db.query(psql_statement, function (error, results, fields) {
             if (error) throw error;
