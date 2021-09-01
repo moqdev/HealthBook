@@ -23,6 +23,67 @@ const theme = {
     },
   };
 
+  export class ViewMedHist extends Component {
+    
+    state = { medhiststate: [] }
+
+    componentDidMount() {
+        this.getNames("");
+        console.log(this.state.names);
+    }
+
+    getNames(value) {
+        let patName = " ";
+        if (value !== undefined)
+            patName = value;
+        console.log(patName);
+        fetch('http://localhost:3001/MedHistView?name='+ patName + '&variable=words')
+        .then(res => res.json())
+        .then(res => this.setState({ medhiststate: res.data }));
+    }
+
+    render() {
+        const { medhiststate } = this.state;
+
+        const Header = () => (
+            <Box
+                tag='header'
+                background='brand'
+                pad='small'
+                elevation='small'
+                justify='between'
+                direction='row'
+                align='center'
+                flex={false}
+            >
+               <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
+
+            </Box>
+        );
+
+        
+        return (
+            <Grommet full={true}
+            theme = {theme}>
+                <Header />
+                <Box fill={true} align="center">
+                    <Form
+                        onSubmit={({ value }) => {
+                            this.getNames(value.email);
+                        }}>
+                        <h4 style={{textAlign:"center", marginBottom:"0"}}>Search By Name</h4>
+                        <FormField name="email" align="center" />
+                        <div align="center">
+                            <Button type="submit" primary label="Submit" />
+                        </div>
+                    </Form>
+                    <Body />
+                </Box>
+            </Grommet>
+        );
+    }
+}
+
 
 
   export default ViewMedHist;
