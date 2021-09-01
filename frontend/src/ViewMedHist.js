@@ -61,7 +61,30 @@ const theme = {
             </Box>
         );
 
-        
+        const Body = () => (
+            <div className="container" style={{width:"100vw"}}>
+                <div className="panel panel-default p50 uth-panel">
+                    <table className="table table-hover">
+                        <thead>
+                            <tr>
+                                <th style={{width:"50vw"}}>Name</th>
+                                <th style={{width:"50vw"}}>Profile</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            {medhiststate.map(patient =>
+                                <tr key={patient.id} style={{textAlign:"center"}}>
+                                    <td>{patient.Name} </td>
+                                    <td>
+                                        <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.email}/>
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        );
         return (
             <Grommet full={true}
             theme = {theme}>
