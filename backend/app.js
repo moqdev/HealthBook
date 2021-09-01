@@ -8,7 +8,25 @@ const db = require('./db');
 const dbHelpers = require('./helpers/dbHelpers')(db);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+//Connection Info
+var con = mysql.createConnection({
+  host: 'localhost',
+  user: '',
+  password: '',
+  database: '',
+  multipleStatements: true
+});
 
+//Connecting To Database
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected to DB");
+});
+
+//Variables to keep state info about who is logged in
+var email_in_use = "";
+var password_in_use = "";
+var who = "";
 var app = express();
 
 app.use(logger('dev'));
@@ -32,6 +50,65 @@ app.get('/checkIfPatientExists', (req, res) => {
       return res.json({
         data: results
       })
+    };
+  });
+});
+
+//Create User Account
+app.get('/makeAccount', (req, res) => {
+  let query = req.query;
+  let name = query.name + " " + query.lastname;
+  let email = query.email;
+  let password = query.password;
+  let address = query.address;
+  let gender = query.gender;
+  let medications = query.medications;
+  let conditions = query.conditions;
+  let surgeries = query.surgeries;
+if(medications===undefined){
+    medications="none"
+  }
+  if(conditions===undefined){
+    conditions="none"
+  }
+  if(!surgeries===undefined){
+    surgeries="none"
+  }
+  let psql_statement = `INSERT INTO Patient (email, password, name, address, gender) 
+                       VALUES ` + `("${email}", "${password}", "${name}", "${address}", "${gender}")`;
+  console.log(psql_statement);
+  con.query(psql_statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      email_in_use = email;
+      password_in_use = password;
+      who="pat";
+      return res.json({
+        data: results
+      })
+    };
+  });
+  psql_statement='SELECT id FROM MedicalHistory ORDER BY id DESC LIMIT 1;';
+  console.log(psql_statement)
+  con.query(psql_statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      let generated_id = results[0].id + 1;
+      let psql_statement = `INSERT INTO MedicalHistory (id, date, conditions, surgeries, medication) 
+      VALUES ` + `("${generated_id}", curdate(), "${conditions}", "${surgeries}", "${medications}")`;
+      console.log(psql_statement);
+      con.query(psql_statement, function (error, results, fields) {
+        if (error) throw error;
+        else {
+          let psql_statement = `INSERT INTO PatientsFillHistory (patient, history) 
+          VALUES ` + `("${email}",${generated_id})`;
+          console.log(psql_statement);
+          con.query(psql_statement, function (error, results, fields) {
+            if (error) throw error;
+            else {};
+          });
+        };
+      });
     };
   });
 });
@@ -63,12 +140,12 @@ app.get('/checklogin', (req, res) => {
   });
 });
   
-//Returns Who is Logged in
+//Return Who is Logged in
 app.get('/userInSession', (req, res) => {
   return res.json({ email: `${email_in_use}`, who:`${who}`});
 });
 
-//Logs the person out
+//Log the user out
 app.get('/endSession', (req, res) => {
   console.log("Ending session");
   email_in_use = "";

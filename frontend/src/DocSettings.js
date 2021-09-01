@@ -46,22 +46,57 @@ export class DocSettings extends Component {
                     <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
                     </AppBar>
                     <Box pad="small">
-                    <Form>
-                      onSubmit=()
+
+                    <Form onSubmit={({ value }) => {
+                        let email_in_use = "";
+                        console.log(value);
+                        fetch("http://localhost:3001/userInSession")
+                          .then(res => res.json())
+                          .then(res => {
+                            var string_json = JSON.stringify(res);
+                            var email_json = JSON.parse(string_json);
+                            email_in_use = email_json.email;
+                            console.log(email_in_use);
+                          fetch("http://localhost:3001/resetPasswordDoctor?email=" + 
+                          email_in_use + "&oldPassword=" + value.oldPassword + "&newPassword=" + 
+                          value.newPassword, {method: 'POST'})
+                          .then(res => res.json())
+                          .then(res => {
+                            let didUpdate = res.data.affectedRows;
+                            if(didUpdate === 0) {
+                                window.alert("Old Password is wrong");
+                            } else {
+                                window.alert("Password Reset Successful");
+                            }
+                          });
+                          });
+
+                    }}>
+                        <h3>Password Change</h3>
+                        <FormField
+                            type='password'
+                            label="Old Password"
+                            name="oldPassword"
+                            required
+                        />
+                        <br />
+                        <FormField
+                            label="New Password"
+                            name="newPassword"
+                            required
+                        />
+                        <br />
+                        <Button
+                            type="submit"
+                            label="Change Password"
+                            primary
+                        />
                     </Form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    </Box>
+                </Box>
+            </Grommet>
+        );
+    }
+}
+                    
 export default DocSettings;
