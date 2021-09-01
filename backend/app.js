@@ -150,6 +150,35 @@ app.get('/checkIfDocExists', (req, res) => {
     };
   });
 });
+//Makes Doctor Account
+app.get('/makeDocAccount', (req, res) => {
+  let params = req.query;
+  let name = params.name + " " + params.lastname;
+  let email = params.email;
+  let password = params.password;
+  let gender = params.gender;
+  let schedule = params.schedule;
+  let psql_statement = `INSERT INTO Doctor (email, gender, password, name) 
+                       VALUES ` + `("${email}", "${gender}", "${password}", "${name}")`;
+  console.log(psql_statement);
+  con.query(psql_statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      let psql_statement = `INSERT INTO DocsHaveSchedules (sched, doctor) 
+                       VALUES ` + `(${schedule}, "${email}")`;
+      console.log(psql_statement);
+      con.query(psql_statement, function(error){
+        if (error) throw error;
+      })
+      email_in_use = email;
+      password_in_use = password;
+      who = 'doc';
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 
 
