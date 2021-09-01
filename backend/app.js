@@ -147,6 +147,71 @@ app.get('/endSession', (req, res) => {
 
 
 
+//Returns Appointment Info To patient logged In
+app.get('/patientViewAppt', (req, res) => {
+  let tmp = req.query;
+  let email = tmp.email;
+  let statement = `SELECT PatientsAttendAppointments.appt as ID,
+                  PatientsAttendAppointments.patient as user, 
+                  PatientsAttendAppointments.concerns as theConcerns, 
+                  PatientsAttendAppointments.symptoms as theSymptoms, 
+                  Appointment.date as theDate,
+                  Appointment.starttime as theStart,
+                  Appointment.endtime as theEnd,
+                  Appointment.status as status
+                  FROM PatientsAttendAppointments, Appointment
+                  WHERE PatientsAttendAppointments.patient = "${email}" AND
+                  PatientsAttendAppointments.appt = Appointment.id`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
+
+//Checks if history exists
+app.get('/checkIfHistory', (req, res) => {
+    let params = req.query;
+    let email = params.email;
+    let statement = "SELECT patient FROM PatientsFillHistory WHERE patient = " + email;
+    console.log(statement)
+    con.query(statement, function (error, results, fields) {
+        if (error) throw error;
+        else {
+            return res.json({
+                data: results
+            })
+        };
+    });
+});
+
+//Adds to PatientsAttendAppointment Table
+app.get('/addToPatientSeeAppt', (req, res) => {
+  let params = req.query;
+  let email = params.email;
+  let appt_id = params.id;
+  let concerns = params.concerns;
+  let symptoms = params.symptoms;
+  let sql_try = `INSERT INTO PatientsAttendAppointments (patient, appt, concerns, symptoms) 
+                 VALUES ("${email}", ${appt_id}, "${concerns}", "${symptoms}")`;
+  console.log(sql_try);
+  con.query(sql_try, function (error, results, fields) {
+    if (error) throw error;
+    else{
+      return res.json({
+        data: results
+      })
+    }
+  });
+
+});
+
+
+
 
 
 
