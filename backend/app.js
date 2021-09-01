@@ -307,6 +307,26 @@ app.get('/checkIfApptExists', (req, res) => {
   });
   //doctor has appointment at the same time - Your start time has to be greater than all prev end times
 });
+//Returns Date/Time of Appointment
+app.get('/getDateTimeOfAppt', (req, res) => {
+  let tmp = req.query;
+  let id = tmp.id;
+  let statement = `SELECT starttime as start, 
+                          endtime as end, 
+                          date as theDate 
+                   FROM Appointment 
+                   WHERE id = "${id}"`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      console.log(JSON.stringify(results));
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 
 
