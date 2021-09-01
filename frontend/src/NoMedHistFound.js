@@ -19,7 +19,25 @@ const theme = {
     },
 };
 
+export class NoMedHistFound extends Component {
+    componentDidMount() {
+    }
+    render() {
+        const Header = () => (
+            <Box
+                tag='header'
+                background='brand'
+                pad='small'
+                elevation='small'
+                justify='between'
+                direction='row'
+                align='center'
+                flex={false}
+            >
+                <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
 
+            </Box>
+        );
 
 
 
