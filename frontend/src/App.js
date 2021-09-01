@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import './App.css';
 import LogIn from './logIn.js';
+import Home from './Home';
+import DocHome from './DocHome'
 
 export default function App() {
   let [component, setComponent] = useState(<LogIn />)
