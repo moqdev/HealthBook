@@ -210,7 +210,54 @@ app.get('/addToPatientSeeAppt', (req, res) => {
 
 });
 
+//Schedules Appointment
+app.get('/schedule', (req, res) => {
+  let params = req.query;
+  let time = params.time;
+  let date = params.date;
+  let id = params.id;
+  let endtime = params.endTime;
+  let concerns = params.concerns;
+  let symptoms = params.symptoms;
+  let doctor = params.doc;
+  let ndate = new Date(date).toLocaleDateString().substring(0, 10)
+  let sql_date = `STR_TO_DATE('${ndate}', '%d/%m/%Y')`;
+  //sql to turn string to sql time obj
+  let sql_start = `CONVERT('${time}', TIME)`;
+  //sql to turn string to sql time obj
+  let sql_end = `CONVERT('${endtime}', TIME)`;
+  let sql_try = `INSERT INTO Appointment (id, date, starttime, endtime, status) 
+                 VALUES (${id}, ${sql_date}, ${sql_start}, ${sql_end}, "NotDone")`;
+  console.log(sql_try);
+  con.query(sql_try, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      let sql_try = `INSERT INTO Diagnose (appt, doctor, diagnosis, prescription) 
+                 VALUES (${id}, "${doctor}", "Not Yet Diagnosed" , "Not Yet Diagnosed")`;
+      console.log(sql_try);
+      con.query(sql_try, function (error, results, fields) {
+        if (error) throw error;
+        else{
+          return res.json({
+            data: results
+          })
+        }
+      });
+    }
+  });
+});
 
+//Generates ID for appointment
+app.get('/genApptUID', (req, res) => {
+  let statement = 'SELECT id FROM Appointment ORDER BY id DESC LIMIT 1;'
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      let generated_id = results[0].id + 1;
+      return res.json({ id: `${generated_id}` });
+    };
+  });
+});
 
 
 
