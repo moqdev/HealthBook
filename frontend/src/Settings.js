@@ -72,7 +72,25 @@ export class Settings extends Component {
                           });
                           });
                     }}>
-
+                        <h3>Password Change</h3>
+                        <FormField
+                            type='password'
+                            label="Old password"
+                            name="oldPassword"
+                            required
+                        />
+                        <br />
+                        <FormField
+                            label="New password"
+                            name="newPassword"
+                            required
+                        />
+                        <br />
+                        <Button
+                            type="submit"
+                            label="Change Password"
+                            primary
+                        />
                     </Form>
                     </Box>
                 </Box>
