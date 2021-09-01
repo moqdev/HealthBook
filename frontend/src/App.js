@@ -23,7 +23,7 @@ import ShowDiagnoses from './ShowDiagnoses.js';
 export default function App() {
   let [component, setComponent] = useState(<LogIn />)
   useEffect(()=>{
-    fetch("http://localhost:3001/userInSession")
+    fetch("/userInSession")
       .then(res => res.json())
       .then(res => {
       let string_json = JSON.stringify(res);
