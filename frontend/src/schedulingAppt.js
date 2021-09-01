@@ -46,9 +46,6 @@ const AppBar = (props) => (
     style={{ zIndex: '1' }}
     {...props} />
 );
-const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
-  const [date, setDate] = React.useState();
-  const [time, setTime] = React.useState();
 
 const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
   const [date, setDate] = React.useState();
@@ -146,17 +143,6 @@ const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
     </Box>
   );
 };
-const DateTimeDropButton = () => {
-  const [date, setDate] = React.useState();
-  const [time, setTime] = React.useState("");
-  const [open, setOpen] = React.useState();
-
-  const onClose = (nextDate, nextTime) => {
-    setDate(nextDate);
-    setTime(nextTime);
-    setOpen(false);
-    setTimeout(() => setOpen(undefined), 1);
-  };
 
 const DateTimeDropButton = () => {
   const [date, setDate] = React.useState();
@@ -194,8 +180,6 @@ const DateTimeDropButton = () => {
     </Grommet>
   );
 };
-const ConcernsTextArea = () => {
-  const [value, setValue] = React.useState("");
 
 const ConcernsTextArea = () => {
   const [value, setValue] = React.useState("");
@@ -221,6 +205,7 @@ const ConcernsTextArea = () => {
     </Grommet>
   );
 };
+
 const SymptomsTextArea = () => {
   const [value, setValue] = React.useState("");
 
@@ -244,105 +229,6 @@ const SymptomsTextArea = () => {
     </Grommet>
   );
 };
-function DoctorsDropdown() {
-  const [value, setValue] = useState();
-  const [doctorsList, setList] = useState([]);
-  useEffect(() => {    
-    fetch("http://localhost:3001/docInfo")
-    .then(res => res.json())
-    .then(res => {
-      let arr = []
-      res.data.forEach(i => {
-        let tmp = `${i.name} (${i.email})`;
-        arr.push(tmp);
-      });
-      setList(arr);
-    });
-  }, []);
-  const onChange = event => {
-    setValue(event.value);
-    let doc = event.value.match(/\((.*)\)/)[1];
-    theDoc = doc;
-  };
-  return (
-    <Select
-      options={doctorsList}
-      value={value}
-      placeholder="Select Doctor"
-      onChange={onChange} fill
-      required
-    />
-  );
-}
-
-export class SchedulingAppt extends Component {
-  constuctor() {
-  }
-  render() {
-    return (
-      <Grommet theme={theme} full>
-        <AppBar>
-        <a style={{ color: 'inherit', textDecoration: 'inherit'}} href="/"><Heading level='3' margin='none'>healthbook</Heading></a>
-        </AppBar>
-        <Box align="center" pad="small" gap="small">
-          <Form
-            onSubmit={({ value }) => {
-              //probably fetch uid here, add one
-              fetch("http://localhost:3001/userInSession")
-                .then(res => res.json())
-                .then(res => {
-                  var string_json = JSON.stringify(res);
-                  var email_json = JSON.parse(string_json);
-                  let email_in_use = email_json.email;
-                  fetch("http://localhost:3001/checkIfApptExists?email=" + email_in_use + "&startTime=" + theTime + "&date=" + theDate + "&docEmail=" + theDoc)
-                    .then(res => res.json())
-                    .then(res => {
-                      if ((res.data[0])) {
-                        window.alert("Appointment Clash! Try another doctor or date/time");
-                      } else {
-                        fetch("http://localhost:3001/genApptUID")
-                          .then(res => res.json())
-                          .then(res => {
-                            var string_json = JSON.stringify(res);
-                            var uid_json = JSON.parse(string_json);
-                            let gen_uid = uid_json.id;
-                            console.log(gen_uid);
-                            fetch("http://localhost:3001/schedule?time=" + theTime + "&endTime=" + endTime +
-                              "&date=" + theDate + "&concerns=" + theConcerns + "&symptoms=" + theSymptoms + 
-                              "&id=" + gen_uid + "&doc=" + theDoc).then((x)=>{
-                              fetch("http://localhost:3001/addToPatientSeeAppt?email=" + email_in_use + "&id=" + gen_uid +
-                                "&concerns=" + theConcerns + "&symptoms=" + theSymptoms).then((x)=>{
-                                  window.alert("Appointment successfully scheduled!");
-                                });
-                            })
-                          });
-                      }
-                    });
-                });
-            }}
-          >
-            <Box align="center" gap="small">
-              <DoctorsDropdown />
-            </Box>
-            <DateTimeDropButton>
-            </DateTimeDropButton>
-            <ConcernsTextArea />
-            <br />
-            <SymptomsTextArea />
-            <br />
-            <Box align="center" pad="small" gap="small">
-              <Button
-                label="Attempt To Schedule"
-                type="submit"
-                primary
-              />
-            </Box>
-          </Form>
-        </Box>
-      </Grommet>
-    );
-  }
-}
 
 function DoctorsDropdown() {
   const [value, setValue] = useState();
