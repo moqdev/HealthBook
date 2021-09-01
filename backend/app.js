@@ -6,22 +6,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const db = require('./db');
 const dbHelpers = require('./helpers/dbHelpers')(db);
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-//Connection Info
-var con = mysql.createConnection({
-  host: 'localhost',
-  user: '',
-  password: '',
-  database: '',
-  multipleStatements: true
-});
-
-//Connecting To Database
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected to DB");
-});
+// var indexRouter = require('./routes/index');
+// var usersRouter = require('./routes/users');
 
 //Variables to keep state info about who is logged in
 var email_in_use = "";
@@ -35,8 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/api/users', usersRouter(dbHelpers));
+// app.use('/', indexRouter);
+// app.use('/api/users', usersRouter(dbHelpers));
 
 //Check if patient exists in database
 app.get('/checkIfPatientExists', (req, res) => {
