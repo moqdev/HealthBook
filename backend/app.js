@@ -9,8 +9,6 @@ const dbHelpers = require('./helpers/dbHelpers')(db);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-
-
 //Variables to keep state info about who is logged in
 var email_in_use = "";
 var password_in_use = "";
