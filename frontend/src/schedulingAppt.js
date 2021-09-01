@@ -46,6 +46,9 @@ const AppBar = (props) => (
     style={{ zIndex: '1' }}
     {...props} />
 );
+const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
+  const [date, setDate] = React.useState();
+  const [time, setTime] = React.useState();
 
 const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
   const [date, setDate] = React.useState();
