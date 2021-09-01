@@ -194,6 +194,8 @@ const DateTimeDropButton = () => {
     </Grommet>
   );
 };
+const ConcernsTextArea = () => {
+  const [value, setValue] = React.useState("");
 
 const ConcernsTextArea = () => {
   const [value, setValue] = React.useState("");
@@ -219,7 +221,6 @@ const ConcernsTextArea = () => {
     </Grommet>
   );
 };
-
 const SymptomsTextArea = () => {
   const [value, setValue] = React.useState("");
 
