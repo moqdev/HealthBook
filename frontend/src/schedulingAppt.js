@@ -46,7 +46,6 @@ const AppBar = (props) => (
     style={{ zIndex: '1' }}
     {...props} />
 );
-
 const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
   const [date, setDate] = React.useState();
   const [time, setTime] = React.useState();
@@ -62,7 +61,7 @@ const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
     let startHour = parseInt(parsedTime[0], 10);
     let endHour = startHour + 1;
 
-        //rejoin into string
+    //rejoin into string
     endTime = `${endHour}:00`;
 
     console.log(endTime);
@@ -143,7 +142,6 @@ const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
     </Box>
   );
 };
-
 const DateTimeDropButton = () => {
   const [date, setDate] = React.useState();
   const [time, setTime] = React.useState("");
@@ -180,7 +178,6 @@ const DateTimeDropButton = () => {
     </Grommet>
   );
 };
-
 const ConcernsTextArea = () => {
   const [value, setValue] = React.useState("");
 
@@ -205,7 +202,6 @@ const ConcernsTextArea = () => {
     </Grommet>
   );
 };
-
 const SymptomsTextArea = () => {
   const [value, setValue] = React.useState("");
 
@@ -229,7 +225,6 @@ const SymptomsTextArea = () => {
     </Grommet>
   );
 };
-
 function DoctorsDropdown() {
   const [value, setValue] = useState();
   const [doctorsList, setList] = useState([]);
@@ -329,6 +324,5 @@ export class SchedulingAppt extends Component {
     );
   }
 }
-
 
 export default SchedulingAppt;
