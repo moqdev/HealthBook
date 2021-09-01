@@ -1,5 +1,3 @@
-
-
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -136,6 +134,21 @@ app.get('/endSession', (req, res) => {
   console.log("Ending session");
   email_in_use = "";
   password_in_use = "";
+});
+//Checks If Doctor Exists
+app.get('/checkIfDocExists', (req, res) => {
+  let params = req.query;
+  let email = params.email;
+  let statement = `SELECT * FROM Doctor WHERE email = "${email}"`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
 });
 
 
