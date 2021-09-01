@@ -71,7 +71,7 @@ class LogIn extends Component {
               onSubmit={({ value }) => {
                 console.log("Submit", value);
                 if (value.isDoc === true) {
-                  fetch("http://localhost:3001/checkDoclogin?email=" + value.email +
+                  fetch("/checkDoclogin?email=" + value.email +
                     "&password=" + value.password)
                     .then(res => res.json())
                     .then(res => {

@@ -51,7 +51,7 @@ const SidebarButtons = () => {
                   window.location = "/scheduleAppt"
                 }
                 else if (label === "Sign Out") {
-                  fetch("http://localhost:3001/endSession");
+                  fetch("/endSession");
                   window.location = "/"
                 }
                 else if (label === "View Appointments") {
@@ -59,7 +59,7 @@ const SidebarButtons = () => {
                 }
                 else if (label === "View Medical History") {
                   let email_in_use = "";
-                  fetch("http://localhost:3001/userInSession")
+                  fetch("/userInSession")
                     .then(res => res.json())
                     .then(res => {
                       var string_json = JSON.stringify(res);
