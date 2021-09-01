@@ -47,7 +47,28 @@ const AppBar = (props) => (
     {...props} />
 );
 
+const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
+  const [date, setDate] = React.useState();
+  const [time, setTime] = React.useState();
 
+  const close = () => {
+    theDate = date;
+    theTime = time;
 
+    //time is string, store it as [hour, min]
+    let parsedTime = theTime.split(":");
+
+    //parse hr string to in and add one hour to start hour
+    let startHour = parseInt(parsedTime[0], 10);
+    let endHour = startHour + 1;
+
+        //rejoin into string
+    endTime = `${endHour}:00`;
+
+    console.log(endTime);
+    console.log(theDate)
+    console.log(theTime);
+    onClose(date || initialDate, time || initialTime);
+  };
 
 export default SchedulingAppt;
