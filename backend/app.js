@@ -327,6 +327,21 @@ app.get('/getDateTimeOfAppt', (req, res) => {
     };
   });
 });
+//Patient Info Related
+
+//to get all doctor names
+app.get('/docInfo', (req, res) => {
+  let statement = 'SELECT * FROM Doctor';
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 
 
