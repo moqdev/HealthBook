@@ -8,14 +8,6 @@ const db = require('./db');
 const dbHelpers = require('./helpers/dbHelpers')(db);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-//Connection Info
-var con = mysql.createConnection({
-  host: 'localhost',
-  user: '',
-  password: '',
-  database: '',
-  multipleStatements: true
-});
 
 //Connecting To Database
 con.connect(function (err) {
