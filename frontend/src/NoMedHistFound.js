@@ -39,10 +39,23 @@ export class NoMedHistFound extends Component {
             </Box>
         );
 
-
-
-
-
+const Body = () => (
+            <div className="container">
+                <div className="panel panel-default p50 uth-panel" >
+                    <Heading alignSelf="center" textAlign="right" margin="large">Medical History Not Found<br /></Heading>
+                </div>
+            </div>
+        );
+        return (
+            <Grommet full={true} theme={theme}>
+                <Box fill={true}>
+                    <Header />
+                    <Body />
+                </Box>
+            </Grommet>
+        );
+    }
+}
 
 
 export default NoMedHistFound;
