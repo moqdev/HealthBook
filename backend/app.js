@@ -102,9 +102,12 @@ if(medications===undefined){
 
 //Patient log-in to show if px is logged in
 app.get('/checklogin', (req, res) => {
+  let params = req.query;
+  let email = params.email;
+  let password = params.password;
   let psql_statement = `SELECT * FROM Patient 
-                       WHERE email="${email}" 
-                       AND password="${password}"`;
+                       WHERE email='${email}' 
+                       AND password='${password}';`;
   console.log(psql_statement);
   db.query(psql_statement, function (error, results, fields) {
     if (error) {
@@ -399,7 +402,7 @@ app.use(function (err, req, res, next) {
 
     // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  // res.render('error');
 });
 
 

@@ -83,17 +83,18 @@ class LogIn extends Component {
                       }
                     });
              } else {
-                  fetch("http://localhost:3001/checklogin?email=" + value.email +
-                    "&password=" + value.password)
-                    .then(res => res.json())
-                    .then(res => {
-                      if (res.data.length === 0) {
-                        window.alert("Invalid Log In");
-                      } else {
-                        window.location = "/Home";
-                        console.log(res.data);
-                      }   
-                    });
+              fetch("/checklogin?email=" + value.email +
+              "&password=" + value.password)
+              .then(res => res.json())
+              .then(res => {
+                console.log(res)
+                if (res.data.length === 0) {
+                  window.alert("Invalid Log In");
+                } else {
+                  window.location = "/Home";
+                  console.log(res.data);
+                }
+              });
                 }
               }
               }>
