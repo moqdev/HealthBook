@@ -9,11 +9,7 @@ const dbHelpers = require('./helpers/dbHelpers')(db);
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
-//Connecting To Database
-con.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected to DB");
-});
+
 
 //Variables to keep state info about who is logged in
 var email_in_use = "";
