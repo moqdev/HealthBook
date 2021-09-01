@@ -259,7 +259,40 @@ app.get('/genApptUID', (req, res) => {
   });
 });
 
+//To fill diagnoses
+app.get('/diagnose', (req, res) => {
+  let params = req.query;
+  let id = params.id;
+  let diagnosis = params.diagnosis;
+  let prescription = params.prescription;
+  let statement = `UPDATE Diagnose SET diagnosis="${diagnosis}", prescription="${prescription}" WHERE appt=${id};`;
+  console.log(statement)
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      let statement = `UPDATE Appointment SET status="Done" WHERE id=${id};`;
+      console.log(statement)
+      con.query(statement, function (error, results, fields){
+        if (error) throw error;
+      })
+    };
+  });
+});
 
+//To show diagnoses
+app.get('/showDiagnoses', (req, res) => {
+  let id = req.query.id;
+  let statement = `SELECT * FROM Diagnose WHERE appt=${id}`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 
 
