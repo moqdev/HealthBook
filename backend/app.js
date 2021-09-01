@@ -21,8 +21,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/api/users', usersRouter(dbHelpers));
+// app.use('/', indexRouter);
+// app.use('/api/users', usersRouter(dbHelpers));
 
 //Check if patient exists in database
 app.get('/checkIfPatientExists', (req, res) => {
