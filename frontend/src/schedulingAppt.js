@@ -178,6 +178,52 @@ const DateTimeDropButton = () => {
     </Grommet>
   );
 };
+const ConcernsTextArea = () => {
+  const [value, setValue] = React.useState("");
 
+  const onChange = event => {
+    setValue(event.target.value);
+    theConcerns = event.target.value;
+  };
+
+  return (
+    <Grommet theme={theme}>
+      <Box
+        width="medium"
+        height="xsmall"
+      >
+      <TextArea
+        placeholder="Enter your concerns..."
+        value={value}
+        onChange={onChange}
+        fill
+        required />
+      </Box>
+    </Grommet>
+  );
+};
+const SymptomsTextArea = () => {
+  const [value, setValue] = React.useState("");
+
+  const onChange = event => {
+    setValue(event.target.value);
+    theSymptoms = event.target.value;
+  };
+
+  return (
+    <Grommet theme={theme}>
+      <Box
+        width="medium"
+        height="xsmall"
+      >
+        <TextArea
+          placeholder="Enter your symptoms..."
+          value={value}
+          onChange={onChange} fill
+          required />
+      </Box>
+    </Grommet>
+  );
+};
 
 export default SchedulingAppt;
