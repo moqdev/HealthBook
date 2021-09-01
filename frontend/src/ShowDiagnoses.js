@@ -56,7 +56,43 @@ export class ShowDiagnoses extends Component {
         const Body = () => (
             <div className="container">
                 <div className="panel panel-default p50 uth-panel">
-                   
+                    {diagnoses.map(diagnosis =>
+                        <Table>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell scope="row">
+                                        <strong>Appointment Id</strong>
+                                    </TableCell>
+                                    <TableCell>{diagnosis.appt}</TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                                <br />
+                                <TableRow>
+                                    <TableCell scope="row">
+                                        <strong>Doctor</strong>
+                                    </TableCell>
+                                    <TableCell>{diagnosis.doctor}</TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                                <br />
+                                <TableRow>
+                                    <TableCell scope="row">
+                                        <strong>Diagnosis</strong>
+                                    </TableCell>
+                                    <TableCell>{diagnosis.diagnosis}</TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                                <br />
+                                <TableRow>
+                                    <TableCell scope="row">
+                                        <strong>Prescription</strong>
+                                    </TableCell>
+                                    <TableCell>{diagnosis.prescription}</TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    )}
                 </div>
                 <hr />
             </div>
