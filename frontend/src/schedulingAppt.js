@@ -229,7 +229,7 @@ function DoctorsDropdown() {
   const [value, setValue] = useState();
   const [doctorsList, setList] = useState([]);
   useEffect(() => {    
-    fetch("http://localhost:3001/docInfo")
+    fetch("/docInfo")
     .then(res => res.json())
     .then(res => {
       let arr = []
@@ -269,29 +269,29 @@ export class SchedulingAppt extends Component {
           <Form
             onSubmit={({ value }) => {
               //probably fetch uid here, add one
-              fetch("http://localhost:3001/userInSession")
+              fetch("/userInSession")
                 .then(res => res.json())
                 .then(res => {
                   var string_json = JSON.stringify(res);
                   var email_json = JSON.parse(string_json);
                   let email_in_use = email_json.email;
-                  fetch("http://localhost:3001/checkIfApptExists?email=" + email_in_use + "&startTime=" + theTime + "&date=" + theDate + "&docEmail=" + theDoc)
+                  fetch("/checkIfApptExists?email=" + email_in_use + "&startTime=" + theTime + "&date=" + theDate + "&docEmail=" + theDoc)
                     .then(res => res.json())
                     .then(res => {
                       if ((res.data[0])) {
                         window.alert("Appointment Clash! Try another doctor or date/time");
                       } else {
-                        fetch("http://localhost:3001/genApptUID")
+                        fetch("/genApptUID")
                           .then(res => res.json())
                           .then(res => {
                             var string_json = JSON.stringify(res);
                             var uid_json = JSON.parse(string_json);
                             let gen_uid = uid_json.id;
                             console.log(gen_uid);
-                            fetch("http://localhost:3001/schedule?time=" + theTime + "&endTime=" + endTime +
+                            fetch("/schedule?time=" + theTime + "&endTime=" + endTime +
                               "&date=" + theDate + "&concerns=" + theConcerns + "&symptoms=" + theSymptoms + 
                               "&id=" + gen_uid + "&doc=" + theDoc).then((x)=>{
-                              fetch("http://localhost:3001/addToPatientSeeAppt?email=" + email_in_use + "&id=" + gen_uid +
+                              fetch("/addToPatientSeeAppt?email=" + email_in_use + "&id=" + gen_uid +
                                 "&concerns=" + theConcerns + "&symptoms=" + theSymptoms).then((x)=>{
                                   window.alert("Appointment successfully scheduled!");
                                 });
