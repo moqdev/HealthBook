@@ -146,6 +146,17 @@ const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
     </Box>
   );
 };
+const DateTimeDropButton = () => {
+  const [date, setDate] = React.useState();
+  const [time, setTime] = React.useState("");
+  const [open, setOpen] = React.useState();
+
+  const onClose = (nextDate, nextTime) => {
+    setDate(nextDate);
+    setTime(nextTime);
+    setOpen(false);
+    setTimeout(() => setOpen(undefined), 1);
+  };
 
 const DateTimeDropButton = () => {
   const [date, setDate] = React.useState();
