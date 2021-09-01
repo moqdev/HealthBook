@@ -142,7 +142,42 @@ const DropContent = ({ date: initialDate, time: initialTime, onClose }) => {
     </Box>
   );
 };
+const DateTimeDropButton = () => {
+  const [date, setDate] = React.useState();
+  const [time, setTime] = React.useState("");
+  const [open, setOpen] = React.useState();
 
+  const onClose = (nextDate, nextTime) => {
+    setDate(nextDate);
+    setTime(nextTime);
+    setOpen(false);
+    setTimeout(() => setOpen(undefined), 1);
+  };
+
+  return (
+    <Grommet theme={theme}>
+      <Box align="center" pad="large">
+        <DropButton
+          open={open}
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          dropContent={
+            <DropContent date={date} time={time} onClose={onClose} />
+          }
+        >
+          <Box direction="row" gap="small" align="center" pad="small">
+            <Text color={date ? undefined : "dark-5"}>
+              {date
+                ? `${new Date(date).toLocaleDateString()} ${time}`
+                : "Select date & time"}
+            </Text>
+            <Schedule />
+          </Box>
+        </DropButton>
+      </Box>
+    </Grommet>
+  );
+};
 
 
 export default SchedulingAppt;
