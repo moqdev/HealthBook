@@ -50,7 +50,7 @@ const SidebarButtons = () => {
                                   window.location = "/ApptList"
                               }
                               else if (label === "Sign Out") {
-                                  fetch("http://localhost:3001/endSession");
+                                  fetch("/endSession");
                                   window.location = "/"
                               }
                               else if (label === "Settings") {
