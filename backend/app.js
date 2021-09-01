@@ -179,6 +179,37 @@ app.get('/makeDocAccount', (req, res) => {
     };
   });
 });
+//Checks if doctor is logged in
+app.get('/checkDoclogin', (req, res) => {
+  let params = req.query;
+  let email = params.email;
+  let password = params.password;
+  let psql_statement = `SELECT * 
+                       FROM Doctor
+                       WHERE email="${email}" AND password="${password}"`;
+  console.log(psql_statement);
+  con.query(psql_statement, function (error, results, fields) {
+    if (error) {
+      console.log("eror");
+      return res.status(500).json({ failed: 'error ocurred' })
+    }
+    else {
+      if (results.length === 0) {
+      } else {
+        var string = JSON.stringify(results);
+        var json = JSON.parse(string);
+        email_in_use = json[0].email;
+        password_in_use = json[0].password;
+        who="doc";
+        console.log(email_in_use);
+        console.log(password_in_use);
+      }
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 
 
