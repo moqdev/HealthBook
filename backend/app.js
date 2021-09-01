@@ -313,6 +313,38 @@ app.get('/doctorViewAppt', (req, res) => {
   });
 });
 
+//To show diagnoses to patient
+app.get('/showDiagnoses', (req, res) => {
+  let id = req.query.id;
+  let statement = `SELECT * FROM Diagnose WHERE appt=${id}`;
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
+
+//To Show all diagnosed appointments till now
+app.get('/allDiagnoses', (req, res) => {
+  let params = req.query;
+  let email = params.patientEmail;
+  let statement =`SELECT date,doctor,concerns,symptoms,diagnosis,prescription FROM 
+  Appointment A INNER JOIN (SELECT * from PatientsAttendAppointments NATURAL JOIN Diagnose 
+  WHERE patient=${email}) AS B ON A.id = B.appt;`
+  console.log(statement);
+  con.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
 
 app.listen(port, () => {
   console.log(`Listening on port ${port} `);
