@@ -41,13 +41,13 @@ export class PatientsViewAppointments extends Component {
     getNames(value) {
         let patName = value;
         console.log(patName);
-        fetch("http://localhost:3001/userInSession")
+        fetch("/userInSession")
             .then(res => res.json())
             .then(res => {
                 var string_json = JSON.stringify(res);
                 var email_json = JSON.parse(string_json);
                 let email_in_use = email_json.email;
-                fetch('http://localhost:3001/patientViewAppt?email=' + email_in_use)
+                fetch('/patientViewAppt?email=' + email_in_use)
                     .then(res => res.json())
                     .then(res => {
                         this.setState({ appointmentsState: res.data });
@@ -90,14 +90,14 @@ export class PatientsViewAppointments extends Component {
                                     {   patient.status==="NotDone"?
                                         <Button label="Cancel"
                                         onClick = {() => {
-                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
+                                            fetch('/deleteAppt?uid='+ patient.ID)
                                             window.location.reload()
                                         }}
                                         ></Button>
                                         :
                                         <Button label="Delete"
                                         onClick = {() => {
-                                            fetch('http://localhost:3001/deleteAppt?uid='+ patient.ID)
+                                            fetch('/deleteAppt?uid='+ patient.ID)
                                             window.location.reload()
                                         }}
                                         ></Button>
