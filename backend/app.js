@@ -192,7 +192,7 @@ app.get('/checkDoclogin', (req, res) => {
   let password = params.password;
   let psql_statement = `SELECT * 
                        FROM Doctor
-                       WHERE email="${email}" AND password="${password}"`;
+                       WHERE email='${email}' AND password='${password}';`
   console.log(psql_statement);
   db.query(psql_statement, function (error, results, fields) {
     if (error) {
@@ -223,9 +223,9 @@ app.post('/resetPasswordPatient', (req, res) => {
   let oldPassword = "" + something.oldPassword;
   let newPassword = "" + something.newPassword;
   let statement = `UPDATE Patient 
-                   SET password = "${newPassword}" 
-                   WHERE email = "${email}" 
-                   AND password = "${oldPassword}";`;
+                   SET password = '${newPassword}' 
+                   WHERE email = '${email}' 
+                   AND password = '${oldPassword}';`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
