@@ -270,6 +270,26 @@ app.get('/schedule', (req, res) => {
   });
 });
 
+//To show appointments to doctor
+app.get('/doctorViewAppt', (req, res) => {
+  console.log("called doctorviewappt")
+  let a = req.query;
+  let email = a.email;
+  let statement = `SELECT a.id,a.date, a.starttime, a.status, p.name, psa.concerns, psa.symptoms
+  FROM Appointment a, PatientsAttendAppointments psa, Patient p
+  WHERE a.id = psa.appt AND psa.patient = p.email
+  AND a.id IN (SELECT appt FROM Diagnose WHERE doctor='${email_in_use}');`;
+  console.log(statement);
+  db.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
+
 //Adds to PatientsAttendAppointment Table
 app.get('/addToPatientSeeAppt', (req, res) => {
   let params = req.query;
@@ -554,25 +574,6 @@ app.get('/diagnose', (req, res) => {
 app.get('/showDiagnoses', (req, res) => {
   let id = req.query.id;
   let statement = `SELECT * FROM Diagnose WHERE appt=${id};`;
-  console.log(statement);
-  db.query(statement, function (error, results, fields) {
-    if (error) throw error;
-    else {
-      return res.json({
-        data: results
-      })
-    };
-  });
-});
-
-//To show appointments to doctor
-app.get('/doctorViewAppt', (req, res) => {
-  let a = req.query;
-  let email = a.email;
-  let statement = `SELECT a.id,a.date, a.starttime, a.status, p.name, psa.concerns, psa.symptoms
-  FROM Appointment a, PatientsAttendAppointments psa, Patient p
-  WHERE a.id = psa.appt AND psa.patient = p.email
-  AND a.id IN (SELECT appt FROM Diagnose WHERE doctor='${email_in_use}');`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
