@@ -342,6 +342,7 @@ app.get('/docInfo', (req, res) => {
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
+      console.log(results)
       return res.json({
         data: results
       })
