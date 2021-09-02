@@ -233,10 +233,14 @@ function DoctorsDropdown() {
     .then(res => res.json())
     .then(res => {
       let arr = []
-      res.data.forEach(i => {
-        let tmp = `${i.name} (${i.email})`;
-        arr.push(tmp);
-      });
+      if(res.data) {
+        console.log(res.data)
+        res.data.forEach(i => {
+          let tmp = `${i.name} (${i.email})`;
+          arr.push(tmp);
+        });
+      }
+
       setList(arr);
     });
   }, []);

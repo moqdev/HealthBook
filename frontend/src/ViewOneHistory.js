@@ -66,7 +66,7 @@ export class ViewOneHistory extends Component {
         const Body = () => (
             <div className="container">
                 <div className="panel panel-default p50 uth-panel">
-                    {medhiststate.map(patient =>
+                    {medhiststate.length ? medhiststate.map(patient =>
                         <Table>
                             <TableBody>
                                 <TableRow>
@@ -126,7 +126,7 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                             </TableBody>
                         </Table>
-                    )}
+                    ) : <div></div>}
                 </div>
                 <hr />
             </div>
