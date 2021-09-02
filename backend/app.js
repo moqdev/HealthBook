@@ -376,7 +376,7 @@ app.get('/MedHistView', (req, res) => {
                     email FROM Patient,PatientsFillHistory
                     WHERE Patient.email = PatientsFillHistory.patient
                     AND Patient.email IN (SELECT patient from PatientsAttendAppointments 
-                    NATURAL JOIN Diagnose WHERE doctor="${email_in_use}")`;
+                    NATURAL JOIN Diagnose WHERE doctor='${email_in_use}');`
   if (patientName != "''")
     statement += " AND Patient.name LIKE " + patientName
   console.log(statement)
