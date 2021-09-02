@@ -29,8 +29,8 @@ const theme = {
     },
   },
 };
-var theDate;
-var theTime;
+var theDate = '';
+var theTime = '';
 var endTime;
 var theConcerns;
 var theSymptoms;

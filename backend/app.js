@@ -259,16 +259,18 @@ app.post('/resetPasswordDoctor', (req, res) => {
 });
 //Checks If a similar appointment exists to avoid a clash
 app.get('/checkIfApptExists', (req, res) => {
+  console.log("called")
   let cond1, cond2, cond3 = ""
   let params = req.query;
   let email = params.email;
   let doc_email = params.docEmail;
   let startTime = params.startTime;
   let date = params.date;
-  let ndate = new Date(date).toLocaleDateString().substring(0, 10)
-  let psql_date = `STR_TO_DATE('${ndate}', '%d/%m/%Y')`;
+  let ndate = new Date(date).toLocaleDateString().substring(0, 10);
+  console.log(date,ndate,'new....')
+  let psql_date = `TO_DATE('${ndate}', '%YYYY-%mm-%dd')`;
   //psql to turn string to psql time obj
-  let psql_start = `CONVERT('${startTime}', TIME)`;
+  let psql_start = `'${startTime}'`;
   let statement = `SELECT * FROM PatientsAttendAppointments, Appointment  
   WHERE patient = '${email}' AND
   appt = id AND
@@ -290,8 +292,8 @@ app.get('/checkIfApptExists', (req, res) => {
           statement = `SELECT doctor, starttime, endtime, breaktime, day FROM DocsHaveSchedules 
           INNER JOIN Schedule ON DocsHaveSchedules.sched=Schedule.id
           WHERE doctor='${doc_email}' AND 
-          day=DAYNAME(${psql_date}) AND 
-          (DATE_ADD(${psql_start},INTERVAL +1 HOUR) <= breaktime OR ${psql_start} >= DATE_ADD(breaktime,INTERVAL +1 HOUR));`
+          day=to_char(timestamp '${date}', 'Day') AND 
+          ((${psql_start} + INTERVAL '1' HOUR) <= breaktime OR ${psql_start} >= (breaktime + INTERVAL '1' HOUR));`
           //not in doctor schedule
           console.log(statement)
           db.query(statement, function (error, results, fields) {
@@ -303,8 +305,9 @@ app.get('/checkIfApptExists', (req, res) => {
               else{
                 results = [1]
               }
+              console.log('cond1....', cond1, 'cond2....', cond2,'result....', results)
               return res.json({
-                data: cond1.concat(cond2,results)
+                data: cond1.rows.concat(cond2.rows,results)
               })
             };
           });
