@@ -243,9 +243,9 @@ app.post('/resetPasswordDoctor', (req, res) => {
   let oldPassword = "" + something.oldPassword;
   let newPassword = "" + something.newPassword;
   let statement = `UPDATE Doctor
-                   SET password = "${newPassword}" 
-                   WHERE email = "${email}" 
-                   AND password = "${oldPassword}";`;
+                   SET password = '${newPassword}' 
+                   WHERE email = '${email}' 
+                   AND password = '${oldPassword}';`
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -269,18 +269,18 @@ app.get('/checkIfApptExists', (req, res) => {
   //psql to turn string to psql time obj
   let psql_start = `CONVERT('${startTime}', TIME)`;
   let statement = `SELECT * FROM PatientsAttendAppointments, Appointment  
-  WHERE patient = "${email}" AND
+  WHERE patient = '${email}' AND
   appt = id AND
   date = ${psql_date} AND
-  starttime = ${psql_start}`
+  starttime = ${psql_start};`
   console.log(statement)
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
       cond1 = results;
       statement=`SELECT * FROM Diagnose d INNER JOIN Appointment a 
-      ON d.appt=a.id WHERE doctor="${doc_email}" AND date=${psql_date} AND status="NotDone" 
-      AND ${psql_start} >= starttime AND ${psql_start} < endtime`
+      ON d.appt=a.id WHERE doctor='${doc_email}' AND date=${psql_date} AND status='NotDone' 
+      AND ${psql_start} >= starttime AND ${psql_start} < endtime;`
       console.log(statement)
       db.query(statement, function (error, results, fields) {
         if (error) throw error;
@@ -288,7 +288,7 @@ app.get('/checkIfApptExists', (req, res) => {
           cond2 = results;
           statement = `SELECT doctor, starttime, endtime, breaktime, day FROM DocsHaveSchedules 
           INNER JOIN Schedule ON DocsHaveSchedules.sched=Schedule.id
-          WHERE doctor="${doc_email}" AND 
+          WHERE doctor='${doc_email}' AND 
           day=DAYNAME(${psql_date}) AND 
           (DATE_ADD(${psql_start},INTERVAL +1 HOUR) <= breaktime OR ${psql_start} >= DATE_ADD(breaktime,INTERVAL +1 HOUR));`
           //not in doctor schedule
