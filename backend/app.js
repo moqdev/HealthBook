@@ -321,7 +321,7 @@ app.get('/getDateTimeOfAppt', (req, res) => {
                           endtime as end, 
                           date as theDate 
                    FROM Appointment 
-                   WHERE id = "${id}"`;
+                   WHERE id = '${id}';`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -337,7 +337,7 @@ app.get('/getDateTimeOfAppt', (req, res) => {
 
 //to get all doctor names
 app.get('/docInfo', (req, res) => {
-  let statement = 'SELECT * FROM Doctor';
+  let statement = 'SELECT * FROM Doctor;';
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -355,7 +355,7 @@ app.get('/OneHistory', (req, res) => {
   let statement = `SELECT gender,name,email,address,conditions,surgeries,medication
                     FROM PatientsFillHistory,Patient,MedicalHistory
                     WHERE PatientsFillHistory.history=id
-                    AND patient=email AND email = ` + email;
+                    AND patient=email AND email = '${email}';`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
