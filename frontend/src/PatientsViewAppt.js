@@ -85,14 +85,14 @@ export class PatientsViewAppointments extends Component {
                                     <td align="center">{patient.status}</td>
                                     <td>
                                         <Button label="See Diagnosis"
-                                        href={`/showDiagnoses/${patient.ID}`}
+                                        href={`/showDiagnoses/${patient.id}`}
                                         ></Button>     
                                     </td> 
                                     <td>
                                     {   patient.status==="NotDone"?
                                         <Button label="Cancel"
                                         onClick = {() => {
-                                            fetch('/deleteAppt?uid='+ patient.ID)
+                                            fetch('/deleteAppt?uid='+ patient.id)
                                             window.location.reload()
                                         }}
                                         ></Button>

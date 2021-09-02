@@ -81,9 +81,9 @@ if(medications===undefined){
     if (error) throw error;
     else {
       console.log(results)
-      let generated_id = results[0].id + 1;
+      let generated_id = results.rows[0].id + 1;
       let psql_statement = `INSERT INTO MedicalHistory (id, date, conditions, surgeries, medication) 
-      VALUES ` + `('${generated_id}', ${curdate()}, '${conditions}', '${surgeries}', '${medications}');`
+      VALUES ` + `('${generated_id}', current_date, '${conditions}', '${surgeries}', '${medications}');`
       console.log(psql_statement);
       db.query(psql_statement, function (error, results, fields) {
         if (error) throw error;
@@ -112,11 +112,12 @@ app.get('/checklogin', (req, res) => {
   console.log(psql_statement);
   db.query(psql_statement, function (error, results, fields) {
     if (error) {
-      console.log("error");
+      console.log("error........");
       return res.status(500).json({ failed: 'error ocurred' })
     }
     else {
       if (results.length === 0) {
+        console.log('here.........')
       } else {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
@@ -171,12 +172,12 @@ app.get('/makeDocAccount', (req, res) => {
   db.query(psql_statement, function (error, results, fields) {
     if (error) throw error;
     else {
-      let psql_statement = `INSERT INTO DocsHaveSchedules (sched, doctor) 
-                       VALUES ` + `(${schedule}, '${email}');`;
-      console.log(psql_statement);
-      db.query(psql_statement, function(error){
-        if (error) throw error;
-      })
+      // let psql_statement = `INSERT INTO DocsHaveSchedules (sched, doctor) 
+      //                  VALUES ` + `(${schedule}, '${email}');`;
+      // console.log(psql_statement);
+      // db.query(psql_statement, function(error){
+      //   if (error) throw error;
+      // })
       email_in_use = email;
       password_in_use = password;
       who = 'doc';
@@ -202,6 +203,7 @@ app.get('/checkDoclogin', (req, res) => {
     }
     else {
       if (results.length === 0) {
+        results.data = [];
       } else {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
