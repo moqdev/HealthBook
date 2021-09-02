@@ -76,7 +76,7 @@ export class PatientsViewAppointments extends Component {
                             {appointmentsState.map(patient =>
                                 <tr key={patient.user}>
                                     <td align="center" >
-                                        {new Date(patient.thedate).toLocaleDateString().substring(0, 10)}
+                                        {new Date(patient.thedate).toLocaleDateString('en-us').substring(0, 10)}
                                     </td>
                                     <td align="center" >{patient.thestart}</td>
                                     <td align="center" >{patient.theend.substring(0, 5)}</td>
