@@ -235,7 +235,7 @@ function DoctorsDropdown() {
       let arr = []
       if(res.data) {
         console.log(res.data)
-        res.data.forEach(i => {
+        res.data.rows.forEach(i => {
           let tmp = `${i.name} (${i.email})`;
           arr.push(tmp);
         });
