@@ -36,14 +36,14 @@ export class ViewOneHistory extends Component {
         let email = "'" + value + "'";
         fetch('/OneHistory?patientEmail='+ email)
         .then(res => res.json())
-            .then(res => this.setState({ medhiststate: res.data }));
+            .then(res => this.setState({ medhiststate: res.data.rows }));
     }
 
     allDiagnoses(value) {
         let email = "'" + value + "'";
         fetch('/allDiagnoses?patientEmail='+ email)
         .then(res => res.json())
-        .then(res => this.setState({ medhiststate2: res.data }));
+        .then(res => this.setState({ medhiststate2: res.data.rows }));
     }
 
     render() {

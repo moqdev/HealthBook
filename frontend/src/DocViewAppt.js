@@ -30,7 +30,7 @@ const theme = {
     getNames() {
         fetch('/doctorViewAppt')
         .then(res => res.json())
-        .then(res => this.setState({ apptlist: res.data }));
+        .then(res => this.setState({ apptlist: res.data.rows }));
     }
 
     render() {
@@ -66,7 +66,7 @@ const theme = {
                             </tr>
                         </thead>
                         <tbody>
-                            {apptlist.map(appt =>
+                            {apptlist.length ? apptlist.map(appt =>
                                 <tr key={appt.name}>
                                     <td>{appt.id}</td>
                                     <td>{appt.name}</td>
@@ -91,7 +91,7 @@ const theme = {
                                         :<div></div>}
                                     </td> 
                                 </tr>
-                            )}
+                            ) : ''}
                         </tbody>
                     </table>
                 </div>

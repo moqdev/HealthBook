@@ -50,12 +50,14 @@ export class PatientsViewAppointments extends Component {
                 fetch('/patientViewAppt?email=' + email_in_use)
                     .then(res => res.json())
                     .then(res => {
-                        this.setState({ appointmentsState: res.data });
+                        console.log(res.data)
+                        this.setState({ appointmentsState: res.data.rows });
                     });
             });
     }
     render() {
         const { appointmentsState } = this.state;
+        console.log(this.state.appointmentsState)
         const Body = () => (
             <div className="container">
                 <div className="panel panel-default p50 uth-panel">
@@ -74,12 +76,12 @@ export class PatientsViewAppointments extends Component {
                             {appointmentsState.map(patient =>
                                 <tr key={patient.user}>
                                     <td align="center" >
-                                        {new Date(patient.theDate).toLocaleDateString().substring(0, 10)}
+                                        {new Date(patient.thedate).toLocaleDateString().substring(0, 10)}
                                     </td>
-                                    <td align="center" >{patient.theStart.substring(0, 5)}</td>
-                                    <td align="center" >{patient.theEnd.substring(0, 5)}</td>
-                                    <td align="center">{patient.theConcerns} </td>
-                                    <td align="center">{patient.theSymptoms}</td>
+                                    <td align="center" >{patient.thestart}</td>
+                                    <td align="center" >{patient.theend.substring(0, 5)}</td>
+                                    <td align="center">{patient.theconcerns} </td>
+                                    <td align="center">{patient.thesymptoms}</td>
                                     <td align="center">{patient.status}</td>
                                     <td>
                                         <Button label="See Diagnosis"
