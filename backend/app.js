@@ -112,11 +112,12 @@ app.get('/checklogin', (req, res) => {
   console.log(psql_statement);
   db.query(psql_statement, function (error, results, fields) {
     if (error) {
-      console.log("error");
+      console.log("error........");
       return res.status(500).json({ failed: 'error ocurred' })
     }
     else {
       if (results.length === 0) {
+        console.log('here.........')
       } else {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
@@ -202,6 +203,7 @@ app.get('/checkDoclogin', (req, res) => {
     }
     else {
       if (results.length === 0) {
+        results.data = [];
       } else {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
