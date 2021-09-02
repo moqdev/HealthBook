@@ -524,7 +524,7 @@ app.get('/diagnose', (req, res) => {
   let id = params.id;
   let diagnosis = params.diagnosis;
   let prescription = params.prescription;
-  let statement = `UPDATE Diagnose SET diagnosis="${diagnosis}", prescription="${prescription}" WHERE appt=${id};`;
+  let statement = `UPDATE Diagnose SET diagnosis='${diagnosis}', prescription='${prescription}' WHERE appt=${id};`;
   console.log(statement)
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -541,7 +541,7 @@ app.get('/diagnose', (req, res) => {
 //To show diagnoses
 app.get('/showDiagnoses', (req, res) => {
   let id = req.query.id;
-  let statement = `SELECT * FROM Diagnose WHERE appt=${id}`;
+  let statement = `SELECT * FROM Diagnose WHERE appt=${id};`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -560,7 +560,7 @@ app.get('/doctorViewAppt', (req, res) => {
   let statement = `SELECT a.id,a.date, a.starttime, a.status, p.name, psa.concerns, psa.symptoms
   FROM Appointment a, PatientsAttendAppointments psa, Patient p
   WHERE a.id = psa.appt AND psa.patient = p.email
-  AND a.id IN (SELECT appt FROM Diagnose WHERE doctor="${email_in_use}")`;
+  AND a.id IN (SELECT appt FROM Diagnose WHERE doctor='${email_in_use}');`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -575,7 +575,7 @@ app.get('/doctorViewAppt', (req, res) => {
 //To show diagnoses to patient
 app.get('/showDiagnoses', (req, res) => {
   let id = req.query.id;
-  let statement = `SELECT * FROM Diagnose WHERE appt=${id}`;
+  let statement = `SELECT * FROM Diagnose WHERE appt=${id};`;
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -593,7 +593,7 @@ app.get('/allDiagnoses', (req, res) => {
   let email = params.patientEmail;
   let statement =`SELECT date,doctor,concerns,symptoms,diagnosis,prescription FROM 
   Appointment A INNER JOIN (SELECT * from PatientsAttendAppointments NATURAL JOIN Diagnose 
-  WHERE patient=${email}) AS B ON A.id = B.appt;`
+  WHERE patient='${email}') AS B ON A.id = B.appt;`
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -625,7 +625,7 @@ app.get('/deleteAppt', (req, res) => {
       }
       else{
         if(who=="pat"){
-          statement = `DELETE FROM PatientsAttendAppointments p WHERE p.appt = ${uid}`;
+          statement = `DELETE FROM PatientsAttendAppointments p WHERE p.appt = ${uid};`;
           console.log(statement);
           db.query(statement, function (error, results, fields) {
             if (error) throw error;
