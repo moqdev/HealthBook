@@ -436,7 +436,7 @@ app.get('/patientViewAppt', (req, res) => {
 app.get('/checkIfHistory', (req, res) => {
     let params = req.query;
     let email = params.email;
-    let statement = `SELECT patient FROM PatientsFillHistory WHERE patient = ${email};`
+    let statement = `SELECT patient FROM PatientsFillHistory WHERE patient = '${email}';`
     console.log(statement)
     db.query(statement, function (error, results, fields) {
         if (error) throw error;
@@ -456,7 +456,7 @@ app.get('/addToPatientSeeAppt', (req, res) => {
   let concerns = params.concerns;
   let symptoms = params.symptoms;
   let sql_try = `INSERT INTO PatientsAttendAppointments (patient, appt, concerns, symptoms) 
-                 VALUES ("${email}", ${appt_id}, "${concerns}", "${symptoms}")`;
+                 VALUES ('${email}', ${appt_id}, '${concerns}', '${symptoms}');`
   console.log(sql_try);
   db.query(sql_try, function (error, results, fields) {
     if (error) throw error;
@@ -486,13 +486,13 @@ app.get('/schedule', (req, res) => {
   //sql to turn string to sql time obj
   let sql_end = `CONVERT('${endtime}', TIME)`;
   let sql_try = `INSERT INTO Appointment (id, date, starttime, endtime, status) 
-                 VALUES (${id}, ${sql_date}, ${sql_start}, ${sql_end}, "NotDone")`;
+                 VALUES (${id}, ${sql_date}, ${sql_start}, ${sql_end}, 'NotDone');`
   console.log(sql_try);
   db.query(sql_try, function (error, results, fields) {
     if (error) throw error;
     else {
       let sql_try = `INSERT INTO Diagnose (appt, doctor, diagnosis, prescription) 
-                 VALUES (${id}, "${doctor}", "Not Yet Diagnosed" , "Not Yet Diagnosed")`;
+                 VALUES (${id}, '${doctor}', 'Not Yet Diagnosed' , 'Not Yet Diagnosed');`
       console.log(sql_try);
       db.query(sql_try, function (error, results, fields) {
         if (error) throw error;
