@@ -290,6 +290,117 @@ app.get('/doctorViewAppt', (req, res) => {
   });
 });
 
+// Returns Appointment Info To patient logged In
+app.get('/patientViewAppt', (req, res) => {
+  let tmp = req.query;
+  let email = tmp.email;
+  let statement = `SELECT PatientsAttendAppointments.appt as ID,
+                  PatientsAttendAppointments.patient as user, 
+                  PatientsAttendAppointments.concerns as theConcerns, 
+                  PatientsAttendAppointments.symptoms as theSymptoms, 
+                  Appointment.date as theDate,
+                  Appointment.starttime as theStart,
+                  Appointment.endtime as theEnd,
+                  Appointment.status as status
+                  FROM PatientsAttendAppointments, Appointment
+                  WHERE PatientsAttendAppointments.patient = '${email}' AND
+                  PatientsAttendAppointments.appt = Appointment.id;`
+  console.log(statement);
+  db.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
+
+//Checks if history exists
+app.get('/checkIfHistory', (req, res) => {
+    let params = req.query;
+    let email = params.email;
+    let statement = `SELECT patient FROM PatientsFillHistory WHERE patient = '${email}';`
+    console.log(statement)
+    db.query(statement, function (error, results, fields) {
+        if (error) throw error;
+        else {
+            return res.json({
+                data: results
+            })
+        };
+    });
+});
+
+
+//To fill diagnoses
+app.get('/diagnose', (req, res) => {
+  let params = req.query;
+  let id = params.id;
+  let diagnosis = params.diagnosis;
+  let prescription = params.prescription;
+  let statement = `UPDATE Diagnose SET diagnosis='${diagnosis}', prescription='${prescription}' WHERE appt=${id};`;
+  console.log(statement)
+  db.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      let statement = `UPDATE Appointment SET status="Done" WHERE id=${id};`;
+      console.log(statement)
+      db.query(statement, function (error, results, fields){
+        if (error) throw error;
+      })
+    };
+  });
+});
+
+// //To show diagnoses
+// app.get('/showDiagnoses', (req, res) => {
+//   let id = req.query.id;
+//   let statement = `SELECT * FROM Diagnose WHERE appt=${id};`;
+//   console.log(statement);
+//   db.query(statement, function (error, results, fields) {
+//     if (error) throw error;
+//     else {
+//       return res.json({
+//         data: results
+//       })
+//     };
+//   });
+// });
+
+//To show diagnoses to patient
+app.get('/showDiagnoses', (req, res) => {
+  let id = req.query.id;
+  let statement = `SELECT * FROM Diagnose WHERE appt=${id};`;
+  console.log(statement);
+  db.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
+
+//To Show all diagnosed appointments till now
+app.get('/allDiagnoses', (req, res) => {
+  let params = req.query;
+  let email = params.patientEmail;
+  let statement =`SELECT date,doctor,concerns,symptoms,diagnosis,prescription FROM 
+  Appointment A INNER JOIN (SELECT * from PatientsAttendAppointments NATURAL JOIN Diagnose 
+  WHERE patient=${email}) AS B ON A.id = B.appt;`
+  console.log(statement);
+  db.query(statement, function (error, results, fields) {
+    if (error) throw error;
+    else {
+      return res.json({
+        data: results
+      })
+    };
+  });
+});
+
 //Adds to PatientsAttendAppointment Table
 app.get('/addToPatientSeeAppt', (req, res) => {
   let params = req.query;
@@ -507,116 +618,7 @@ app.use(function (err, req, res, next) {
 });
 
 
-//Returns Appointment Info To patient logged In
-app.get('/patientViewAppt', (req, res) => {
-  let tmp = req.query;
-  let email = tmp.email;
-  let statement = `SELECT PatientsAttendAppointments.appt as ID,
-                  PatientsAttendAppointments.patient as user, 
-                  PatientsAttendAppointments.concerns as theConcerns, 
-                  PatientsAttendAppointments.symptoms as theSymptoms, 
-                  Appointment.date as theDate,
-                  Appointment.starttime as theStart,
-                  Appointment.endtime as theEnd,
-                  Appointment.status as status
-                  FROM PatientsAttendAppointments, Appointment
-                  WHERE PatientsAttendAppointments.patient = '${email}' AND
-                  PatientsAttendAppointments.appt = Appointment.id;`
-  console.log(statement);
-  db.query(statement, function (error, results, fields) {
-    if (error) throw error;
-    else {
-      return res.json({
-        data: results
-      })
-    };
-  });
-});
 
-//Checks if history exists
-app.get('/checkIfHistory', (req, res) => {
-    let params = req.query;
-    let email = params.email;
-    let statement = `SELECT patient FROM PatientsFillHistory WHERE patient = '${email}';`
-    console.log(statement)
-    db.query(statement, function (error, results, fields) {
-        if (error) throw error;
-        else {
-            return res.json({
-                data: results
-            })
-        };
-    });
-});
-
-
-//To fill diagnoses
-app.get('/diagnose', (req, res) => {
-  let params = req.query;
-  let id = params.id;
-  let diagnosis = params.diagnosis;
-  let prescription = params.prescription;
-  let statement = `UPDATE Diagnose SET diagnosis='${diagnosis}', prescription='${prescription}' WHERE appt=${id};`;
-  console.log(statement)
-  db.query(statement, function (error, results, fields) {
-    if (error) throw error;
-    else {
-      let statement = `UPDATE Appointment SET status="Done" WHERE id=${id};`;
-      console.log(statement)
-      db.query(statement, function (error, results, fields){
-        if (error) throw error;
-      })
-    };
-  });
-});
-
-//To show diagnoses
-app.get('/showDiagnoses', (req, res) => {
-  let id = req.query.id;
-  let statement = `SELECT * FROM Diagnose WHERE appt=${id};`;
-  console.log(statement);
-  db.query(statement, function (error, results, fields) {
-    if (error) throw error;
-    else {
-      return res.json({
-        data: results
-      })
-    };
-  });
-});
-
-//To show diagnoses to patient
-app.get('/showDiagnoses', (req, res) => {
-  let id = req.query.id;
-  let statement = `SELECT * FROM Diagnose WHERE appt=${id};`;
-  console.log(statement);
-  db.query(statement, function (error, results, fields) {
-    if (error) throw error;
-    else {
-      return res.json({
-        data: results
-      })
-    };
-  });
-});
-
-//To Show all diagnosed appointments till now
-app.get('/allDiagnoses', (req, res) => {
-  let params = req.query;
-  let email = params.patientEmail;
-  let statement =`SELECT date,doctor,concerns,symptoms,diagnosis,prescription FROM 
-  Appointment A INNER JOIN (SELECT * from PatientsAttendAppointments NATURAL JOIN Diagnose 
-  WHERE patient='${email}') AS B ON A.id = B.appt;`
-  console.log(statement);
-  db.query(statement, function (error, results, fields) {
-    if (error) throw error;
-    else {
-      return res.json({
-        data: results
-      })
-    };
-  });
-});
 
 
 //To delete appointment

@@ -39,7 +39,7 @@ const theme = {
         console.log(patName);
         fetch('/MedHistView?name='+ patName + '&variable=words')
         .then(res => res.json())
-        .then(res => this.setState({ medhiststate: res.data }));
+        .then(res => this.setState({ medhiststate: res.data.rows }));
     }
 
     render() {

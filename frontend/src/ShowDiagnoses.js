@@ -35,7 +35,7 @@ export class ShowDiagnoses extends Component {
     componentDidMount() {
         fetch('/showDiagnoses?id='+ id)
         .then(res => res.json())
-        .then(res => this.setState({ diagnoses: res.data }));
+        .then(res => this.setState({ diagnoses: res.data.rows }));
     }
     render() {
         const { diagnoses } = this.state;

@@ -50,7 +50,8 @@ export class PatientsViewAppointments extends Component {
                 fetch('/patientViewAppt?email=' + email_in_use)
                     .then(res => res.json())
                     .then(res => {
-                        this.setState({ appointmentsState: res.data });
+                        console.log(res.data)
+                        this.setState({ appointmentsState: res.data.rows });
                     });
             });
     }
