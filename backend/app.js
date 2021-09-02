@@ -80,6 +80,7 @@ if(medications===undefined){
   db.query(psql_statement, function (error, results, fields) {
     if (error) throw error;
     else {
+      console.log(results)
       let generated_id = results[0].id + 1;
       let psql_statement = `INSERT INTO MedicalHistory (id, date, conditions, surgeries, medication) 
       VALUES ` + `('${generated_id}', ${curdate()}, '${conditions}', '${surgeries}', '${medications}');`
@@ -259,7 +260,7 @@ app.post('/resetPasswordDoctor', (req, res) => {
 });
 //Checks If a similar appointment exists to avoid a clash
 app.get('/checkIfApptExists', (req, res) => {
-  console.log("called")
+  console.log("calledmsldkfj")
   let cond1, cond2, cond3 = ""
   let params = req.query;
   let email = params.email;
@@ -281,6 +282,7 @@ app.get('/checkIfApptExists', (req, res) => {
     if (error) throw error;
     else {
       cond1 = results;
+      console.log(results.rows,'results1........')
       statement=`SELECT * FROM Diagnose d INNER JOIN Appointment a 
       ON d.appt=a.id WHERE doctor='${doc_email}' AND date=${psql_date} AND status='NotDone' 
       AND ${psql_start} >= starttime AND ${psql_start} < endtime;`
@@ -288,6 +290,7 @@ app.get('/checkIfApptExists', (req, res) => {
       db.query(statement, function (error, results, fields) {
         if (error) throw error;
         else {
+          console.log(results.rows,'results2........')
           cond2 = results;
           statement = `SELECT doctor, starttime, endtime, breaktime, day FROM DocsHaveSchedules 
           INNER JOIN Schedule ON DocsHaveSchedules.sched=Schedule.id
@@ -299,13 +302,13 @@ app.get('/checkIfApptExists', (req, res) => {
           db.query(statement, function (error, results, fields) {
             if (error) throw error;
             else {
-              if(results.rows.length){
+              if(!results.rows.length){
                 results = []
               }
               else{
                 results = [1]
               }
-              console.log('cond1....', cond1, 'cond2....', cond2,'result....', results)
+              // console.log('cond1....', cond1, 'cond2....', cond2,'result....', results)
               return res.json({
                 data: cond1.rows.concat(cond2.rows,results)
               })
@@ -513,10 +516,12 @@ app.get('/schedule', (req, res) => {
 
 //Generates ID for appointment
 app.get('/genApptUID', (req, res) => {
+  "called............"
   let statement = 'SELECT id FROM Appointment ORDER BY id DESC LIMIT 1;'
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
+      console.log(results)
       let generated_id = results[0].id + 1;
       return res.json({ id: `${generated_id}` });
     };
