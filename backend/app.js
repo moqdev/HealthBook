@@ -204,8 +204,9 @@ app.get('/checkDoclogin', (req, res) => {
       } else {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
-        email_in_use = json[0].email;
-        password_in_use = json[0].password;
+        console.log(json)
+        email_in_use = json.rows[0].email;
+        password_in_use = json.rows[0].password;
         who="doc";
         console.log(email_in_use);
         console.log(password_in_use);
@@ -372,7 +373,7 @@ app.get('/MedHistView', (req, res) => {
   let params = req.query;
   let patientName = "'%" + params.name + "%'";
   let secondParamTest = "" + params.variable;
-  let statement = `SELECT name AS 'Name',
+  let statement = `SELECT name AS Name,
                     PatientsFillHistory.history AS 'ID',
                     email FROM Patient,PatientsFillHistory
                     WHERE Patient.email = PatientsFillHistory.patient
