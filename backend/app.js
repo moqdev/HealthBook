@@ -419,8 +419,8 @@ app.get('/patientViewAppt', (req, res) => {
                   Appointment.endtime as theEnd,
                   Appointment.status as status
                   FROM PatientsAttendAppointments, Appointment
-                  WHERE PatientsAttendAppointments.patient = "${email}" AND
-                  PatientsAttendAppointments.appt = Appointment.id`;
+                  WHERE PatientsAttendAppointments.patient = '${email}' AND
+                  PatientsAttendAppointments.appt = Appointment.id;`
   console.log(statement);
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
@@ -436,7 +436,7 @@ app.get('/patientViewAppt', (req, res) => {
 app.get('/checkIfHistory', (req, res) => {
     let params = req.query;
     let email = params.email;
-    let statement = "SELECT patient FROM PatientsFillHistory WHERE patient = " + email;
+    let statement = `SELECT patient FROM PatientsFillHistory WHERE patient = ${email};`
     console.log(statement)
     db.query(statement, function (error, results, fields) {
         if (error) throw error;
