@@ -71,7 +71,7 @@ class LogIn extends Component {
               onSubmit={({ value }) => {
                 console.log("Submit", value);
                 if (value.isDoc === true) {
-                  fetch("http://localhost:3001/checkDoclogin?email=" + value.email +
+                  fetch("/checkDoclogin?email=" + value.email +
                     "&password=" + value.password)
                     .then(res => res.json())
                     .then(res => {
@@ -83,17 +83,18 @@ class LogIn extends Component {
                       }
                     });
              } else {
-                  fetch("http://localhost:3001/checklogin?email=" + value.email +
-                    "&password=" + value.password)
-                    .then(res => res.json())
-                    .then(res => {
-                      if (res.data.length === 0) {
-                        window.alert("Invalid Log In");
-                      } else {
-                        window.location = "/Home";
-                        console.log(res.data);
-                      }   
-                    });
+              fetch("/checklogin?email=" + value.email +
+              "&password=" + value.password)
+              .then(res => res.json())
+              .then(res => {
+                console.log(res)
+                if (res.data.length === 0) {
+                  window.alert("Invalid Log In");
+                } else {
+                  window.location = "/Home";
+                  console.log(res.data);
+                }
+              });
                 }
               }
               }>

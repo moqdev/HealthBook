@@ -56,7 +56,7 @@ export class MakeDoc extends Component {
                             onSubmit={({ value }) => {
                                 console.log("Submit", value);
                                 console.log(value.email)
-                                fetch("http://localhost:3001/checkIfDocExists?email=" + value.email)
+                                fetch("/checkIfDocExists?email=" + value.email)
                                     .then(res => res.json())
                                     .then(res => {
                                         console.log(res.data[0]);
@@ -64,7 +64,7 @@ export class MakeDoc extends Component {
                                             window.alert("A doctor is already associated with that email.");
                                             console.log("no user found");
                                         } else {
-                                            fetch("http://localhost:3001/makeDocAccount?name=" + value.firstName + "&lastname=" + value.lastName + "&email=" + value.email
+                                            fetch("/makeDocAccount?name=" + value.firstName + "&lastname=" + value.lastName + "&email=" + value.email
                                                 + "&password=" + value.password + "&gender=" + value.gender + "&schedule=" + value.schedule);
                                             window.location = "/DocHome";
                                         }

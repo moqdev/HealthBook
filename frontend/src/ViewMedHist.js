@@ -37,7 +37,7 @@ const theme = {
         if (value !== undefined)
             patName = value;
         console.log(patName);
-        fetch('http://localhost:3001/MedHistView?name='+ patName + '&variable=words')
+        fetch('/MedHistView?name='+ patName + '&variable=words')
         .then(res => res.json())
         .then(res => this.setState({ medhiststate: res.data }));
     }
@@ -72,14 +72,14 @@ const theme = {
                             </tr>
                         </thead> 
                         <tbody>
-                            {medhiststate.map(patient =>
+                            {medhiststate.length ? medhiststate.map(patient =>
                                 <tr key={patient.id} style={{textAlign:"center"}}>
                                     <td>{patient.Name} </td>
                                     <td>
                                         <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.email}/>
                                     </td>
                                 </tr>
-                            )}
+                            ) : ''}
                         </tbody>
                     </table>
                 </div>

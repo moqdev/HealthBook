@@ -91,7 +91,7 @@ export class Diagnose extends Component {
         <Box align="center" gap="small">
           <Form
             onSubmit={({ value }) => {
-              fetch("http://localhost:3001/diagnose?diagnosis=" + diagnosis + "&prescription=" + prescription
+              fetch("/diagnose?diagnosis=" + diagnosis + "&prescription=" + prescription
               + "&id=" + id).then(()=>{
               })
               window.alert("Diagnosis Submitted!");

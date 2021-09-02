@@ -33,7 +33,7 @@ export class ShowDiagnoses extends Component {
     }
     state = { diagnoses: [] }
     componentDidMount() {
-        fetch('http://localhost:3001/showDiagnoses?id='+ id)
+        fetch('/showDiagnoses?id='+ id)
         .then(res => res.json())
         .then(res => this.setState({ diagnoses: res.data }));
     }

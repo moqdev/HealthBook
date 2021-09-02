@@ -54,7 +54,7 @@ export class CreateAccount extends Component {
               onSubmit={({ value }) => {
                 console.log("Submit", value);
 
-                fetch("http://localhost:3001/checkIfPatientExists?email=" + value.email)
+                fetch("/checkIfPatientExists?email=" + value.email)
                   .then(res => res.json())
                   .then(res => {
                     console.log(res.data[0]);
@@ -63,7 +63,7 @@ export class CreateAccount extends Component {
                       window.alert("An account is already associated with that email.");
                       console.log("no user found");
                     } else {
-                      fetch("http://localhost:3001/makeAccount?name=" + value.firstName + "&lastname=" + value.lastName + "&email=" + value.email
+                      fetch("/makeAccount?name=" + value.firstName + "&lastname=" + value.lastName + "&email=" + value.email
                         + "&password=" + value.password + "&address=" + value.address + "&gender=" + value.gender
                         + "&conditions=" + value.conditions + "&medications=" + value.medications + "&surgeries=" + value.surgeries);
                       window.location = "/Home";

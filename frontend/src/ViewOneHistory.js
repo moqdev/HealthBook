@@ -34,14 +34,14 @@ export class ViewOneHistory extends Component {
 
     getHistory(value) {
         let email = "'" + value + "'";
-        fetch('http://localhost:3001/OneHistory?patientEmail='+ email)
+        fetch('/OneHistory?patientEmail='+ email)
         .then(res => res.json())
             .then(res => this.setState({ medhiststate: res.data }));
     }
 
     allDiagnoses(value) {
         let email = "'" + value + "'";
-        fetch('http://localhost:3001/allDiagnoses?patientEmail='+ email)
+        fetch('/allDiagnoses?patientEmail='+ email)
         .then(res => res.json())
         .then(res => this.setState({ medhiststate2: res.data }));
     }
@@ -66,7 +66,7 @@ export class ViewOneHistory extends Component {
         const Body = () => (
             <div className="container">
                 <div className="panel panel-default p50 uth-panel">
-                    {medhiststate.map(patient =>
+                    {medhiststate.length ? medhiststate.map(patient =>
                         <Table>
                             <TableBody>
                                 <TableRow>
@@ -126,7 +126,7 @@ export class ViewOneHistory extends Component {
                                 </TableRow>
                             </TableBody>
                         </Table>
-                    )}
+                    ) : <div></div>}
                 </div>
                 <hr />
             </div>

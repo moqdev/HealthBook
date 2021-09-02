@@ -28,7 +28,7 @@ const theme = {
     }
 
     getNames() {
-        fetch('http://localhost:3001/doctorViewAppt')
+        fetch('/doctorViewAppt')
         .then(res => res.json())
         .then(res => this.setState({ apptlist: res.data }));
     }
@@ -84,7 +84,7 @@ const theme = {
                                         {appt.status === "NotDone"?
                                             <Button label="Cancel"
                                             onClick = {() => {
-                                                fetch('http://localhost:3001/deleteAppt?uid='+ appt.id)
+                                                fetch('/deleteAppt?uid='+ appt.id)
                                                 window.location.reload();
                                             }}
                                             ></Button>
