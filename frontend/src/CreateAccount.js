@@ -14,8 +14,8 @@ import './App.css';
 const theme = {
   global: {
     colors: {
-      brand: '#000000',
-      focus: '#000000'
+      brand: '#00739D',
+      focus: '#00739D'
     },
     font: {
       family: 'Lato',
@@ -137,6 +137,7 @@ export class CreateAccount extends Component {
                 <Button
                   primary
                   label="I'm a doctor"
+                  
                   href="/MakeDoc" />
               </Box>
                </Form>

@@ -13,8 +13,8 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#000000',
-            focus: '#000000'
+            brand: '#00739D',
+            focus: '#00739D'
         },
         font: {
             family: 'Lato',
@@ -120,7 +120,7 @@ export class DocHome extends Component {
                           align="center">
                           <Box align="center" pad="large">
                               <Heading
-                                  color="#000000">Welcome Doctor
+                                  color="#00739D">Welcome Doctor
                               </Heading>
                           </Box>
                       </Box>

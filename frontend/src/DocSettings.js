@@ -14,8 +14,8 @@ import './App.css';
 const theme = {
     global: {
         colors: {
-            brand: '#000000',
-            focus: '#000000'
+            brand: '#00739D',
+            focus: '#00739D'
         },
         font: {
             family: 'Lato',
