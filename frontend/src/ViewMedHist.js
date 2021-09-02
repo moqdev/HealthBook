@@ -72,14 +72,14 @@ const theme = {
                             </tr>
                         </thead> 
                         <tbody>
-                            {medhiststate.map(patient =>
+                            {medhiststate.length ? medhiststate.map(patient =>
                                 <tr key={patient.id} style={{textAlign:"center"}}>
                                     <td>{patient.Name} </td>
                                     <td>
                                         <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.email}/>
                                     </td>
                                 </tr>
-                            )}
+                            ) : ''}
                         </tbody>
                     </table>
                 </div>

@@ -299,7 +299,7 @@ app.get('/checkIfApptExists', (req, res) => {
           db.query(statement, function (error, results, fields) {
             if (error) throw error;
             else {
-              if(results.length){
+              if(results.rows.length){
                 results = []
               }
               else{
@@ -377,13 +377,13 @@ app.get('/MedHistView', (req, res) => {
   let patientName = "'%" + params.name + "%'";
   let secondParamTest = "" + params.variable;
   let statement = `SELECT name AS Name,
-                    PatientsFillHistory.history AS 'ID',
+                    PatientsFillHistory.history AS ID,
                     email FROM Patient,PatientsFillHistory
                     WHERE Patient.email = PatientsFillHistory.patient
                     AND Patient.email IN (SELECT patient from PatientsAttendAppointments 
-                    NATURAL JOIN Diagnose WHERE doctor='${email_in_use}');`
+                    NATURAL JOIN Diagnose WHERE doctor='${email_in_use}')`
   if (patientName != "''")
-    statement += " AND Patient.name LIKE " + patientName
+    statement += " AND Patient.name LIKE " + patientName + ';'
   console.log(statement)
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
