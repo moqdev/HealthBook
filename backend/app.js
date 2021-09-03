@@ -203,13 +203,13 @@ app.get('/checkDoclogin', (req, res) => {
     }
     else {
       if (results.length === 0) {
-        results.data = [];
+        console.log('here.........')
       } else {
         var string = JSON.stringify(results);
         var json = JSON.parse(string);
         console.log(json)
-        email_in_use = json.rows[0].email;
-        password_in_use = json.rows[0].password;
+        email_in_use = json.rows.length ? json.rows[0].email : '';
+        password_in_use = json.rows.length ? json.rows[0].password :'';
         who="doc";
         console.log(email_in_use);
         console.log(password_in_use);
@@ -346,7 +346,7 @@ app.get('/diagnose', (req, res) => {
   db.query(statement, function (error, results, fields) {
     if (error) throw error;
     else {
-      let statement = `UPDATE Appointment SET status="Done" WHERE id=${id};`;
+      let statement = `UPDATE Appointment SET status='Done' WHERE id=${id};`;
       console.log(statement)
       db.query(statement, function (error, results, fields){
         if (error) throw error;

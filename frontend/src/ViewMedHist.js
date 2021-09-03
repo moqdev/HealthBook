@@ -39,7 +39,10 @@ const theme = {
         console.log(patName);
         fetch('/MedHistView?name='+ patName + '&variable=words')
         .then(res => res.json())
-        .then(res => this.setState({ medhiststate: res.data.rows }));
+        .then(res => {
+            console.log(res.data);
+            this.setState({ medhiststate: res.data.rows })
+        });
     }
 
     render() {
@@ -74,7 +77,7 @@ const theme = {
                         <tbody>
                             {medhiststate.length ? medhiststate.map(patient =>
                                 <tr key={patient.id} style={{textAlign:"center"}}>
-                                    <td>{patient.Name} </td>
+                                    <td>{patient.name} </td>
                                     <td>
                                         <Button label="Medical Profile" href={'/ViewOneHistory/' + patient.email}/>
                                     </td>
