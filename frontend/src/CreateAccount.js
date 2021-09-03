@@ -116,6 +116,7 @@ export class CreateAccount extends Component {
               <FormField
                 label="Password"
                 name="password"
+                type='password'
                 placeholder="Password"
                 required
                 validate={{ regexp: /^(?=.{8,})(?=.*[0-9]{2})/, message: "@ least 8 characters containing 2 digits" }} />
