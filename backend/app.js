@@ -245,7 +245,7 @@ app.get('/schedule', (req, res) => {
   let concerns = params.concerns;
   let symptoms = params.symptoms;
   let doctor = params.doc;
-  let ndate = new Date(date).toLocaleDateString().substring(0, 10)
+  let ndate = new Date(date).toLocaleDateString('en-us').substring(0, 10)
   let sql_date = `TO_DATE('${ndate}', '%mm/%dd/%YYYY')`;
   //sql to turn string to sql time obj
   let sql_start = `'${time}'`;
@@ -473,7 +473,7 @@ app.get('/checkIfApptExists', (req, res) => {
   let doc_email = params.docEmail;
   let startTime = params.startTime;
   let date = params.date;
-  let ndate = new Date(date).toLocaleDateString().substring(0, 10);
+  let ndate = new Date(date).toLocaleDateString('en-us').substring(0, 10);
   console.log(date,ndate,'new....')
   let psql_date = `TO_DATE('${ndate}', '%mm/%dd/%YYYY')`;
   //psql to turn string to psql time obj

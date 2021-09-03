@@ -168,7 +168,7 @@ const DateTimeDropButton = () => {
           <Box direction="row" gap="small" align="center" pad="small">
             <Text color={date ? undefined : "dark-5"}>
               {date
-                ? `${new Date(date).toLocaleDateString()} ${time}`
+                ? `${new Date(date).toLocaleDateString('en-us')} ${time}`
                 : "Select date & time"}
             </Text>
             <Schedule />

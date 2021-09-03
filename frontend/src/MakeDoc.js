@@ -101,6 +101,7 @@ export class MakeDoc extends Component {
                             <FormField
                                 label="Password"
                                 name="password"
+                                type='password'
                                 required
                                 placeholder="Please enter your password."
                                 validate={{ regexp: /^(?=.{8,})(?=.*[0-9]{2})/, message: "@ least 8 characters containing 2 digits" }} />

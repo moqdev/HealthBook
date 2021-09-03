@@ -70,7 +70,7 @@ const theme = {
                                 <tr key={appt.name}>
                                     <td>{appt.id}</td>
                                     <td>{appt.name}</td>
-                                    <td>{new Date(appt.date).toLocaleDateString().substring(0,10)} </td>
+                                    <td>{new Date(appt.date).toLocaleDateString('en-us').substring(0,10)} </td>
                                     <td>{appt.starttime}</td>
                                     <td>{appt.concerns}</td>
                                     <td>{appt.symptoms}</td>
