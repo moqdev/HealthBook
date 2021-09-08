@@ -12,7 +12,7 @@ healthbook is a patient-healthcare provider app that allows users and providers 
 !["Screenshot of patient medical history"](https://github.com/moqdev/HealthBook/blob/master/docs/medical-history.png?raw=true)
 !["Screenshot of patient search"](https://github.com/moqdev/HealthBook/blob/master/docs/patient-search.png?raw=true)
 
-<b>Schema:</b>
+#### **Schema:**
 !["Screenshot of schema"](https://github.com/moqdev/HealthBook/blob/master/docs/Schema.png?raw=true)
 
 
