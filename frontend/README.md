@@ -68,3 +68,13 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Screenshots
+!["Screenshot of schema"](https://github.com/moqdev/HealthBook/blob/master/docs/Schema.png?raw=true)
+!["Screenshot of patient home"](https://github.com/moqdev/HealthBook/blob/master/docs/patient-home.png?raw=true)
+!["Screenshot of schedule appointment"](https://github.com/moqdev/HealthBook/blob/master/docs/schedule-appointent.png?raw=true)
+!["Screenshot of appointments"](https://github.com/moqdev/HealthBook/blob/master/docs/appointments.png?raw=true)
+!["Screenshot of diagnosis"](https://github.com/moqdev/HealthBook/blob/master/docs/diagnose-patient.png?raw=true)
+!["Screenshot of appointment view for doctor"](https://github.com/moqdev/HealthBook/blob/master/docs/doctor-appointment-view.png?raw=true)
+!["Screenshot of patient medical history"](https://github.com/moqdev/HealthBook/blob/master/docs/medical-history.png?raw=true)
+!["Screenshot of patient search"](https://github.com/moqdev/HealthBook/blob/master/docs/patient-search.png?raw=true)
