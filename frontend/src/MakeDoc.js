@@ -49,7 +49,7 @@ export class MakeDoc extends Component {
                 </AppBar>
                 <Box fill align="center" justify="top">
                     <Box width="medium">
-                    <Text color = "#AAAAAA">Doctor's registration form:</Text>
+                    <Text color = "#4566E0">Doctor's registration form:</Text>
                         <Form
                             onReset={event => console.log(event)}
                             method="post"

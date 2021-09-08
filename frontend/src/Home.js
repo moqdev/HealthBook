@@ -130,7 +130,7 @@ export class Home extends Component {
               align="center">
               <Box align="center" pad="large">
                 <Heading 
-                  color="#00739D">Welcome to HealthBook!
+                  color="#00739D">Welcome to healthbook!
                 </Heading>
               </Box>
             </Box>
