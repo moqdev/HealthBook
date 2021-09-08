@@ -42,7 +42,8 @@ Then open http://localhost:3000 in your browser.
 
 
 <b>Technologies Used:</b> 
-<pre> Frontend : React.js 
+<pre> 
+Frontend : React.js 
 Backend : Node.js, Express 
 Database : PostgreSQL, Material UI 
 </pre
